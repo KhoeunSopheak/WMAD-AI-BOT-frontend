@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 
+
 export function Sidebar() {
   const [activeItem, setActiveItem] = useState("ai-chat")
 
@@ -138,46 +139,7 @@ export function Sidebar() {
   ]
 
   return (
-    <div className="w-64 border-r h-full flex flex-col bg-white">
-      <div className="p-4 flex items-center justify-between">
-        <div className="flex items-center space-x-2">
-          <div className="flex items-center justify-center w-8 h-8 bg-gray-100 rounded">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="20"
-              height="20"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="lucide lucide-code"
-            >
-              <polyline points="16 18 22 12 16 6" />
-              <polyline points="8 6 2 12 8 18" />
-            </svg>
-          </div>
-          <span className="font-semibold">WMAD GPT</span>
-        </div>
-        <button className="p-1 rounded hover:bg-gray-100">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="20"
-            height="20"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className="lucide lucide-chevron-left"
-          >
-            <path d="m15 18-6-6 6-6" />
-          </svg>
-        </button>
-      </div>
-
+    <div className="w-64 h-[700px] flex flex-col">
       <div className="p-2">
         <div className="relative">
           <svg
@@ -210,7 +172,7 @@ export function Sidebar() {
               <button
                 onClick={() => setActiveItem(item.id)}
                 className={`w-full flex items-center space-x-3 px-3 py-2 rounded-md text-sm ${
-                  activeItem === item.id ? "bg-blue-100 text-blue-600" : "hover:bg-gray-100"
+                  activeItem === item.id ? "bg-blue-100 text-blue-600" : "hover:bg-gray-200"
                 }`}
               >
                 <span className={activeItem === item.id ? "text-blue-600" : "text-gray-500"}>{item.icon}</span>
@@ -244,7 +206,7 @@ export function Sidebar() {
             </svg>
           </div>
           <div className="flex-1 min-w-0">
-            <p className="text-sm font-medium truncate">User Account</p>
+            <p className="text-sm font-medium truncate text-white">User Account</p>
             <p className="text-xs text-gray-500 truncate">user@example.com</p>
           </div>
         </div>
