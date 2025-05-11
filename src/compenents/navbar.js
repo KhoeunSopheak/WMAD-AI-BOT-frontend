@@ -1,8 +1,11 @@
 import React from "react";
-import bell from "../assets/bell.png";
 import logo from "../assets/wmadlogo.png";
+import {
+  Bell,
+  UserCircle,
+} from "lucide-react";
 
-export const Navbar = () => {
+function Navbar() {
   return (
     <header className="flex items-center justify-between px-6 py-4">
       <div className="flex items-center space-x-20">
@@ -13,22 +16,16 @@ export const Navbar = () => {
           <h1>WMAD GPT</h1>
         </div>
       </div>
-      <div className="flex items-center">
-        <button type="button" className="py-3 px-3 p-2">
-          <div className="flex items-center justify-center w-6 h-5 rounded">
-            <img src={bell} alt="bell" />
-          </div>
+      <div className="flex items-center gap-2">
+      <button type="button" className="w-8 h-8 flex items-center justify-center text-[#184f71] hover:text-blue-600">
+          <Bell className="w-5 h-5" />
         </button>
-        <div className="h-8 w-8 overflow-hidden rounded-full bg-blue-600">
-          <img
-            src="/placeholder.svg"
-            alt="Avatar"
-            width={32}
-            height={32}
-            className="h-full w-full object-cover"
-          />
+        <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600">
+          <UserCircle className="w-6 h-6" />
         </div>
       </div>
     </header>
   );
 };
+
+export default Navbar;

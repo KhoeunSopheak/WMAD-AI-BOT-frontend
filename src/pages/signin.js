@@ -1,11 +1,10 @@
 "use client"
 import { useState } from "react"
-import { Mail, User, Lock } from "lucide-react"
+import { Mail, Lock } from "lucide-react"
 import logo from "../assets/wmadlogo.png"
 
-export default function Signup() {
+export default function Signin() {
   const [formData, setFormData] = useState({
-    fullname: "",
     email: "",
     password: "",
   })
@@ -21,9 +20,6 @@ export default function Signup() {
 
   const validate = () => {
     const newErrors = {}
-    if (formData.fullname.length < 3) {
-      newErrors.fullname = "Full name must be at least 3 characters"
-    }
     if (!/\S+@\S+\.\S+/.test(formData.email)) {
       newErrors.email = "Email is invalid"
     }
@@ -53,21 +49,6 @@ export default function Signup() {
           </div>
         </div>
         <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="relative">
-            <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none text-blue-400">
-              <User size={18} />
-            </div>
-            <input
-              type="text"
-              name="fullname"
-              value={formData.fullname}
-              onChange={handleChange}
-              placeholder="Full name"
-              className="w-full pl-10 pr-3 py-2 border border-blue-200 rounded-xl focus:outline-none focus:ring-1 focus:ring-blue-500"
-              required
-            />
-            {errors.fullname && <p className="text-sm text-red-500 mt-1">{errors.fullname}</p>}
-          </div>
           <div className="relative">
             <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none text-blue-400">
               <Mail size={18} />
@@ -102,7 +83,7 @@ export default function Signup() {
             type="submit"
             className="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-xl transition duration-200"
           >
-            Sign up
+            Sign in
           </button>
         </form>
       </div>
