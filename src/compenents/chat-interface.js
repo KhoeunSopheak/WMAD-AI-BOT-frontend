@@ -24,7 +24,7 @@ const ChatPage = () => {
     // `${import.meta.env.VITE_BASE_URL}/api/users/chats/askQuery`
 
     try {
-      const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImY0NzI4NzQ3LWI4YmEtNDFmNi1iZjcwLWYwOWNhYzE3M2NhMSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzQ3MDMzMTQyLCJleHAiOjE3NDk2MjUxNDJ9.YnQehi_kECrixNTHAkQYAUKcDfNwhe4m5c_yE46IK78"
+      const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjljM2I5ZjE4LWNiNzYtNDU1Ny1hYTBiLWZkMzAyMGFiYjJiYSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzQ3MDU2MDUyLCJleHAiOjE3NDk2NDgwNTJ9.BK0BNvrLtdrrf0YTAPXBba4HUrZfjbEqTzlWe_k_dWY"
       // const token = localStorage.getItem("token");
       const response = await fetch( "http://localhost:3003/api/users/chats/askQuery",
         {
