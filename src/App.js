@@ -4,7 +4,7 @@ import { Layout } from "../src/compenents/layout";
 import Category from "./pages/category";
 import Signup from "./pages/signup";
 import Signin from "./pages/signin";
-import Chat from "./compenents/chat-interface";
+import Chat from "./pages/chat";
 import QuizPage from "./pages/quiz";
 
 function App() {
@@ -12,7 +12,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route element={<Layout />}>
-        <Route path="/" element={<Chat />} />
+          <Route path="/" element={<Chat />} />
           <Route path="/category" element={<Category />} />
           <Route path="/quiz" element={<QuizPage />} />
         </Route>
