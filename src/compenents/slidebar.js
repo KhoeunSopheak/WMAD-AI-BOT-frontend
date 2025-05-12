@@ -63,7 +63,7 @@ function Sidebar() {
   ]
 
   return (
-    <div className="w-64 h-screen flex flex-col bg-white shadow">
+    <div className="w-64 h-full flex flex-col bg-white shadow">
       {/* Search input here */}
 
       <nav className="flex-1 overflow-y-auto p-2">
