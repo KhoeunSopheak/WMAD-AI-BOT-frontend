@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { FaUser, FaGraduationCap, FaUserSlash } from 'react-icons/fa';
+import { FaUser, FaUserSlash } from 'react-icons/fa';
 
 export default function DashboardSection() {
   const [users, setUsers] = useState([]);
@@ -9,7 +9,7 @@ export default function DashboardSection() {
   const [error, setError] = useState(null);
 
   useEffect( () => {
-    const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImY0NzI4NzQ3LWI4YmEtNDFmNi1iZjcwLWYwOWNhYzE3M2NhMSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzQ3MDMzMTQyLCJleHAiOjE3NDk2MjUxNDJ9.YnQehi_kECrixNTHAkQYAUKcDfNwhe4m5c_yE46IK78"
+    const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjljM2I5ZjE4LWNiNzYtNDU1Ny1hYTBiLWZkMzAyMGFiYjJiYSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzQ3MDU2MDUyLCJleHAiOjE3NDk2NDgwNTJ9.BK0BNvrLtdrrf0YTAPXBba4HUrZfjbEqTzlWe_k_dWY"
       // const token = localStorage.getItem("token");
     const fetchTotalUser = async () => {
       try {
@@ -35,7 +35,7 @@ export default function DashboardSection() {
     };
 
     const fetchUserBlock = async () => {
-      const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImY0NzI4NzQ3LWI4YmEtNDFmNi1iZjcwLWYwOWNhYzE3M2NhMSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzQ3MDMzMTQyLCJleHAiOjE3NDk2MjUxNDJ9.YnQehi_kECrixNTHAkQYAUKcDfNwhe4m5c_yE46IK78"
+      const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjljM2I5ZjE4LWNiNzYtNDU1Ny1hYTBiLWZkMzAyMGFiYjJiYSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzQ3MDU2MDUyLCJleHAiOjE3NDk2NDgwNTJ9.BK0BNvrLtdrrf0YTAPXBba4HUrZfjbEqTzlWe_k_dWY"
       // const token = localStorage.getItem("token");
       try {
         const response = await fetch("http://localhost:3003/api/users/blocks/total", {
@@ -58,27 +58,53 @@ export default function DashboardSection() {
         setError(error.message || "Failed to fetch user block.");
       }
     };
+
+    const fetchUser = async () => {
+      const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjljM2I5ZjE4LWNiNzYtNDU1Ny1hYTBiLWZkMzAyMGFiYjJiYSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzQ3MDU2MDUyLCJleHAiOjE3NDk2NDgwNTJ9.BK0BNvrLtdrrf0YTAPXBba4HUrZfjbEqTzlWe_k_dWY"
+      // const token = localStorage.getItem("token");
+      try {
+        const response = await fetch("http://localhost:3003/api/auth", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch user");
+        }
+
+        const data = await response.json();
+        console.log("User fetched successfully:", data);
+        setUsers(data);
+      } catch (error) {
+        console.error("Error fetching user:", error);
+        setError(error.message || "Failed to fetch user.");
+      }
+    };
  
     
 
-    const fakeTasks = [
-      { id: 1, creator: { name: "Sopheak", avatar: "/placeholder.svg" }, task: "Design dashboard UI", status: "In Progress", priority: "High", lastUpdate: "2025-05-10" },
-      { id: 2, creator: { name: "Kunthea", avatar: "/placeholder.svg" }, task: "Fix login bug", status: "Done", priority: "Medium", lastUpdate: "2025-05-09" },
-      { id: 3, creator: { name: "Reach", avatar: "/placeholder.svg" }, task: "Set up database", status: "In Review", priority: "High", lastUpdate: "2025-05-08" },
-      { id: 4, creator: { name: "Rak", avatar: "/placeholder.svg" }, task: "Update user profile page", status: "Done", priority: "Low", lastUpdate: "2025-05-07" },
-      { id: 5, creator: { name: "Rong", avatar: "/placeholder.svg" }, task: "Create API for reports", status: "In Progress", priority: "Medium", lastUpdate: "2025-05-06" },
-      { id: 1, creator: { name: "Sopheak", avatar: "/placeholder.svg" }, task: "Design dashboard UI", status: "In Progress", priority: "High", lastUpdate: "2025-05-10" },
-      { id: 2, creator: { name: "Kunthea", avatar: "/placeholder.svg" }, task: "Fix login bug", status: "Done", priority: "Medium", lastUpdate: "2025-05-09" },
-      { id: 3, creator: { name: "Reach", avatar: "/placeholder.svg" }, task: "Set up database", status: "In Review", priority: "High", lastUpdate: "2025-05-08" },
-      { id: 4, creator: { name: "Rak", avatar: "/placeholder.svg" }, task: "Update user profile page", status: "Done", priority: "Low", lastUpdate: "2025-05-07" },
-      { id: 5, creator: { name: "Rong", avatar: "/placeholder.svg" }, task: "Create API for reports", status: "In Progress", priority: "Medium", lastUpdate: "2025-05-06" },
-    ];
+    // const fakeTasks = [
+    //   { id: 1, creator: { name: "Sopheak", avatar: "/placeholder.svg" }, task: "Design dashboard UI", status: "In Progress", priority: "High", lastUpdate: "2025-05-10" },
+    //   { id: 2, creator: { name: "Kunthea", avatar: "/placeholder.svg" }, task: "Fix login bug", status: "Done", priority: "Medium", lastUpdate: "2025-05-09" },
+    //   { id: 3, creator: { name: "Reach", avatar: "/placeholder.svg" }, task: "Set up database", status: "In Review", priority: "High", lastUpdate: "2025-05-08" },
+    //   { id: 4, creator: { name: "Rak", avatar: "/placeholder.svg" }, task: "Update user profile page", status: "Done", priority: "Low", lastUpdate: "2025-05-07" },
+    //   { id: 5, creator: { name: "Rong", avatar: "/placeholder.svg" }, task: "Create API for reports", status: "In Progress", priority: "Medium", lastUpdate: "2025-05-06" },
+    //   { id: 1, creator: { name: "Sopheak", avatar: "/placeholder.svg" }, task: "Design dashboard UI", status: "In Progress", priority: "High", lastUpdate: "2025-05-10" },
+    //   { id: 2, creator: { name: "Kunthea", avatar: "/placeholder.svg" }, task: "Fix login bug", status: "Done", priority: "Medium", lastUpdate: "2025-05-09" },
+    //   { id: 3, creator: { name: "Reach", avatar: "/placeholder.svg" }, task: "Set up database", status: "In Review", priority: "High", lastUpdate: "2025-05-08" },
+    //   { id: 4, creator: { name: "Rak", avatar: "/placeholder.svg" }, task: "Update user profile page", status: "Done", priority: "Low", lastUpdate: "2025-05-07" },
+    //   { id: 5, creator: { name: "Rong", avatar: "/placeholder.svg" }, task: "Create API for reports", status: "In Progress", priority: "Medium", lastUpdate: "2025-05-06" },
+    // ];
 
     fetchTotalUser();
     fetchUserBlock();
+    fetchUser();
 
     setTimeout(() => {
-      setUsers(fakeTasks);
+      // setUsers(fakeTasks);
       setLoading(false);
     }, 1000);
   }, []);
@@ -130,10 +156,10 @@ export default function DashboardSection() {
               <tr key={user.id} className="border-b">
                 <td className="py-4 px-6">
                   <div className="flex items-center gap-2">
-                    {user.creator?.avatar && user.creator.avatar !== "/placeholder.svg" ? (
+                    {user.full_name && user.full_name !== "/placeholder.svg" ? (
                       <img
-                        src={user.creator.avatar}
-                        alt={user.creator.name || "Unknown"}
+                        src={user.avatar}
+                        alt={user.full_name || "Unknown"}
                         width={32}
                         height={32}
                         className="rounded-full"
@@ -141,19 +167,19 @@ export default function DashboardSection() {
                     ) : (
                       <div
                         className="w-8 h-8 rounded-full flex items-center justify-center text-white font-bold"
-                        style={{ backgroundColor: getColorByFirstLetter(user.creator?.name?.[0]) }}
+                        style={{ backgroundColor: getColorByFirstLetter(user.full_name?.[0]) }}
                       >
-                        {user.creator?.name?.[0]?.toUpperCase() || "U"}
+                        {user.full_name?.[0]?.toUpperCase() || "U"}
                       </div>
                     )}
-                    <span>{user.creator?.name || "Unknown"}</span>
+                    <span>{user.full_name || "Unknown"}</span>
                   </div>
                 </td>
 
-                <td className="py-4 px-6">{user.task}</td>
-                <td className="py-4 px-6">{user.status}</td>
-                <td className="py-4 px-6">{user.priority}</td>
-                <td className="py-4 px-6">{user.lastUpdate}</td>
+                <td className="py-4 px-6">{user.full_name}</td>
+                <td className="py-4 px-6">{user.email}</td>
+                <td className="py-4 px-6">{user.created_at}</td>
+                <td className="py-4 px-6">{user.updated_at}</td>
               </tr>
             ))}
           </tbody>
