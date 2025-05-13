@@ -1,24 +1,42 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Send, Loader2 } from "lucide-react";
 import ChatMessage from "./chat-message";
+import { useParams } from "react-router-dom";
 
 const ChatPage = () => {
+  const { categoryTitle } = useParams();
+  const [selectedCategory, setSelectedCategory] = useState("");
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef(null);
 
+  
+  console.log("=====>", messages);
+
+
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
+
+  useEffect(() => {
+    if (categoryTitle) {
+      setSelectedCategory(categoryTitle);
+      localStorage.setItem("selectedCategory", categoryTitle);
+    } else {
+      setSelectedCategory("");
+      localStorage.removeItem("selectedCategory");
+    }
+  }, [categoryTitle]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!input.trim()) return;
 
-    const userMessage = { role: "user", content: input };
+    const userMessage = { role: "user", content: input, selectedCategory };
     setMessages((prev) => [...prev, userMessage]);
     setInput("");
+    setSelectedCategory("");
     setIsLoading(true);
 
     // `${import.meta.env.VITE_BASE_URL}/api/users/chats/askQuery`
@@ -33,7 +51,11 @@ const ChatPage = () => {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
-          body: JSON.stringify({ user_message: input, isStream: true }),
+          body: JSON.stringify({ 
+            category: selectedCategory || null,
+            user_message: input,
+             isStream: true 
+          }),
         }
       );
 
@@ -73,10 +95,10 @@ const ChatPage = () => {
       <div className="flex flex-col w-full max-w-4xl">
         <main className="flex-1 overflow-auto p-4 space-y-4 w-full">
         {messages.length === 0 && (
-          <div className="flex flex-col items-center justify-center h-96 text-center text-black pointer-events-none">
-            <h1 className="text-3xl font-bold mb-4">Welcome to WMAD!</h1>
+          <div className="flex flex-col items-center justify-center h-4/5 text-center text-black pointer-events-none">
+            <h1 className="text-3xl font-bold mb-4">{selectedCategory || "Hi, I'm WMAD GPT."}</h1>
              <p className="text-lg">
-               Start a conversation by typing your message below. We're excited to chat with you!
+               How can i help you today?
              </p>
           </div>
           )}

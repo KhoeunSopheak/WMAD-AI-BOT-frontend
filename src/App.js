@@ -15,8 +15,9 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route element={<Layout />}>
-          <Route path="/dashboard" element={<Dashboard/>} />
+          <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/" element={<Chat />} />
+          <Route path="/category/:categoryTitle" element={<Chat />} />
           <Route path="/category" element={<Category />} />
           <Route path="/quiz" element={<QuizPage />} />
           <Route path="/roadMap" element={<RoadMap />} />
