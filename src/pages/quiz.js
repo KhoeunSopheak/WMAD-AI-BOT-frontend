@@ -6,9 +6,9 @@ const GenerateQuiz = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null); // To manage error messages
   console.log(topic);
-  
-  
-  const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjA2MmNjZjkzLWE1MzktNDFjMC1hNjEyLWEyODA0YzBiMzc4NCIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzQ3MDEzNzk2LCJleHAiOjE3NDk2MDU3OTZ9.IEIvRA2NqAtEmaUbgMdvCWx82MXVqmsvIL6H3sZR78w";
+
+  const token = localStorage.getItem("token");
+  console.log(token);
 
   const headers = {
     "Content-Type": "application/json",
@@ -17,28 +17,31 @@ const GenerateQuiz = () => {
 
   const handleGenerateQuiz = async () => {
     if (!topic || !token) return;
-  
+
     setLoading(true);
     setError(null);
-  
+
     try {
-      const response = await fetch("http://localhost:3003/api/users/quizzes/generate-quiz", {
-        method: "POST",
-        headers,
-        body: JSON.stringify({ topic }),
-      });
-  
+      const response = await fetch(
+        "http://localhost:3003/api/users/quizzes/generate-quiz",
+        {
+          method: "POST",
+          headers,
+          body: JSON.stringify({ topic }),
+        }
+      );
+
       const text = await response.text();
-  
+
       // Try extracting the JSON-like array from the text using regex
       const match = text.match(/\[\s*{[\s\S]*?}\s*\]/); // Very basic array match
-  
+
       if (!match) {
         throw new Error("Quiz array not found in response.");
       }
-  
+
       const parsedQuizzes = JSON.parse(match[0]);
-  
+
       setQuizzes((prev) => [...parsedQuizzes, ...prev]);
       setTopic("");
     } catch (error) {
@@ -48,7 +51,6 @@ const GenerateQuiz = () => {
       setLoading(false);
     }
   };
-  
 
   const fetchAllQuizzes = async () => {
     if (!token) return;
@@ -61,7 +63,7 @@ const GenerateQuiz = () => {
       if (!res.ok) throw new Error("Unauthorized or fetch failed");
       const data = await res.json();
       console.log(data);
-      
+
       setQuizzes(data);
     } catch (error) {
       console.error("Failed to fetch quizzes:", error);
@@ -86,7 +88,9 @@ const GenerateQuiz = () => {
         />
         <button
           onClick={handleGenerateQuiz}
-          className={`bg-blue-600 text-white px-4 py-2 rounded-md ${loading ? 'opacity-50' : ''}`}
+          className={`bg-blue-600 text-white px-4 py-2 rounded-md ${
+            loading ? "opacity-50" : ""
+          }`}
           disabled={loading || !topic || !token}
         >
           {loading ? "Generating..." : "Generate"}
@@ -98,12 +102,8 @@ const GenerateQuiz = () => {
           Please log in to generate quizzes.
         </p>
       )}
-      
-      {error && (
-        <p className="text-red-500 mb-4 text-center">
-          {error}
-        </p>
-      )}
+
+      {error && <p className="text-red-500 mb-4 text-center">{error}</p>}
 
       <div className="space-y-4">
         {quizzes.map((quiz, index) => (
@@ -115,7 +115,9 @@ const GenerateQuiz = () => {
                 <li
                   key={i}
                   className={
-                    opt === quiz.correct_answer ? "font-bold text-green-600" : ""
+                    opt === quiz.correct_answer
+                      ? "font-bold text-green-600"
+                      : ""
                   }
                 >
                   {opt}
