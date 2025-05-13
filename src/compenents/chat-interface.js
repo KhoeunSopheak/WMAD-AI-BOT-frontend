@@ -90,7 +90,7 @@ const ChatPage = () => {
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            className="flex-1 p-2 h-16 border border-gray-300 rounded-l-xl focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
+            className="flex-1 p-2 h-16 border border-gray-300 rounded-l-xl focus:outline-none text-black"
             placeholder="Type your message..."
           />
           <button
