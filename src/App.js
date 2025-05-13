@@ -6,6 +6,8 @@ import Signup from "./pages/signup";
 import Signin from "./pages/signin";
 import Chat from "./pages/chat";
 import QuizPage from "./pages/quiz";
+import RoadMap from "./pages/roadmap";
+import DetailPage from "./pages/detailPage"
 import Dashboard from "./pages/dashboard";
 
 function App() {
@@ -17,6 +19,8 @@ function App() {
           <Route path="/" element={<Chat />} />
           <Route path="/category" element={<Category />} />
           <Route path="/quiz" element={<QuizPage />} />
+          <Route path="/roadMap" element={<RoadMap />} />
+          <Route path="/roadmap/:roadmapId/child/:childTitle" element={<DetailPage />} />
         </Route>
         <Route path="/signup" element={<Signup />} />
         <Route path="/signin" element={<Signin />} />

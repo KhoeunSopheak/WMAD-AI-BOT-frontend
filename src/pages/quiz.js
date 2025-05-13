@@ -7,6 +7,8 @@ const GenerateQuiz = () => {
   const [error, setError] = useState(null); // To manage error messages
   console.log(topic);
 
+  //const token = localStorage.getItem("token");
+  //console.log(token);
 
   const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImY0NzI4NzQ3LWI4YmEtNDFmNi1iZjcwLWYwOWNhYzE3M2NhMSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzQ3MDMzMTQyLCJleHAiOjE3NDk2MjUxNDJ9.YnQehi_kECrixNTHAkQYAUKcDfNwhe4m5c_yE46IK78";
 
@@ -49,7 +51,6 @@ const GenerateQuiz = () => {
     }
   };
 
-
   const fetchAllQuizzes = async () => {
     if (!token) return;
 
@@ -86,7 +87,9 @@ const GenerateQuiz = () => {
         />
         <button
           onClick={handleGenerateQuiz}
-          className={`bg-blue-600 text-white px-4 py-2 rounded-md ${loading ? 'opacity-50' : ''}`}
+          className={`bg-blue-600 text-white px-4 py-2 rounded-md ${
+            loading ? "opacity-50" : ""
+          }`}
           disabled={loading || !topic || !token}
         >
           {loading ? "Generating..." : "Generate"}
@@ -115,7 +118,9 @@ const GenerateQuiz = () => {
                 <li
                   key={i}
                   className={
-                    opt === quiz.correct_answer ? "font-bold text-green-600" : ""
+                    opt === quiz.correct_answer
+                      ? "font-bold text-green-600"
+                      : ""
                   }
                 >
                   {opt}
