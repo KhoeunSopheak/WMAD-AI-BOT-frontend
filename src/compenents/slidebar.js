@@ -25,7 +25,7 @@ function Sidebar() {
     },
     {
       id: "chats",
-      label: "Chat",
+      label: "ChatWMAD GPT",
       path: "/",
       icon: <MessageCircle size={20} />,
     },
