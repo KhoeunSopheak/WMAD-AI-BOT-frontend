@@ -7,8 +7,10 @@ const GenerateQuiz = () => {
   const [error, setError] = useState(null); // To manage error messages
   console.log(topic);
 
-  const token = localStorage.getItem("token");
-  console.log(token);
+  //const token = localStorage.getItem("token");
+  //console.log(token);
+
+  const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImY0NzI4NzQ3LWI4YmEtNDFmNi1iZjcwLWYwOWNhYzE3M2NhMSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzQ3MDMzMTQyLCJleHAiOjE3NDk2MjUxNDJ9.YnQehi_kECrixNTHAkQYAUKcDfNwhe4m5c_yE46IK78";
 
   const headers = {
     "Content-Type": "application/json",
@@ -22,14 +24,11 @@ const GenerateQuiz = () => {
     setError(null);
 
     try {
-      const response = await fetch(
-        "http://localhost:3003/api/users/quizzes/generate-quiz",
-        {
-          method: "POST",
-          headers,
-          body: JSON.stringify({ topic }),
-        }
-      );
+      const response = await fetch("http://localhost:3003/api/users/quizzes/generate-quiz", {
+        method: "POST",
+        headers,
+        body: JSON.stringify({ topic }),
+      });
 
       const text = await response.text();
 
@@ -103,7 +102,11 @@ const GenerateQuiz = () => {
         </p>
       )}
 
-      {error && <p className="text-red-500 mb-4 text-center">{error}</p>}
+      {error && (
+        <p className="text-red-500 mb-4 text-center">
+          {error}
+        </p>
+      )}
 
       <div className="space-y-4">
         {quizzes.map((quiz, index) => (

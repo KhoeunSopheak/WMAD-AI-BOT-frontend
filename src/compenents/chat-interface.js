@@ -21,17 +21,19 @@ const ChatPage = () => {
     setInput("");
     setIsLoading(true);
 
+    // `${import.meta.env.VITE_BASE_URL}/api/users/chats/askQuery`
+
     try {
-      const token = localStorage.getItem("token");
-      const response = await fetch(
-        `${import.meta.env.VITE_BASE_URL}/api/chat/askQuery`,
+      const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjljM2I5ZjE4LWNiNzYtNDU1Ny1hYTBiLWZkMzAyMGFiYjJiYSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzQ3MDU2MDUyLCJleHAiOjE3NDk2NDgwNTJ9.BK0BNvrLtdrrf0YTAPXBba4HUrZfjbEqTzlWe_k_dWY"
+      // const token = localStorage.getItem("token");
+      const response = await fetch( "http://localhost:3003/api/users/chats/askQuery",
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
-          body: JSON.stringify({ query: input, isStream: true }),
+          body: JSON.stringify({ user_message: input, isStream: true }),
         }
       );
 
@@ -68,12 +70,12 @@ const ChatPage = () => {
 
   return (
     <div className="flex justify-center h-full text-white">
-      <div className="flex flex-col w-full max-w-3xl">
+      <div className="flex flex-col w-full max-w-4xl">
         <main className="flex-1 overflow-auto p-4 space-y-4 w-full">
         {messages.length === 0 && (
-          <div className="flex flex-col items-center justify-center h-96 text-center text-[#184f71] pointer-events-none">
+          <div className="flex flex-col items-center justify-center h-96 text-center text-black pointer-events-none">
             <h1 className="text-3xl font-bold mb-4">Welcome to WMAD!</h1>
-             <p className="text-lg max-w-md">
+             <p className="text-lg">
                Start a conversation by typing your message below. We're excited to chat with you!
              </p>
           </div>
