@@ -16,7 +16,7 @@ function App() {
       <Routes>
         <Route element={<Layout />}>
           <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/" element={<Chat />} />
+          <Route path="/chat" element={<Chat />} />
           <Route path="/category/:categoryTitle" element={<Chat />} />
           <Route path="/category" element={<Category />} />
           <Route path="/quiz" element={<QuizPage />} />
@@ -24,7 +24,7 @@ function App() {
           <Route path="/roadmap/:roadmapId/child/:childTitle" element={<DetailPage />} />
         </Route>
         <Route path="/signup" element={<Signup />} />
-        <Route path="/signin" element={<Signin />} />
+        <Route path="/" element={<Signin />} />
       </Routes>
     </BrowserRouter>
   );
