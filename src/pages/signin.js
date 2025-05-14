@@ -1,14 +1,17 @@
 "use client"
-import { useState } from "react"
-import { Mail, Lock } from "lucide-react"
-import logo from "../assets/wmadlogo.png"
+import { useState } from "react";
+import { Mail, Lock } from "lucide-react";
+import logo from "../assets/wmadlogo.png";
+import { useNavigate, Link } from "react-router-dom";
 
 export default function Signin() {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
-  })
-  const [errors, setErrors] = useState({})
+  });
+  const [errors, setErrors] = useState({});
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target
@@ -29,25 +32,52 @@ export default function Signin() {
     return newErrors
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     const validationErrors = validate()
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors)
       return
     }
-    setErrors({})
-    console.log("Form submitted:", formData)
+    setErrors({});
+    setLoading(true)
+
+    try {
+      const res = await fetch("http://localhost:3003/api/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      })
+
+      const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data.message || "Something went wrong")
+      }
+
+      const { token, role } = data;
+
+      localStorage.setItem("token", token);
+      localStorage.setItem("userRole", role);
+      navigate("/");
+      console.log("Success:", data)
+    } catch (err) {
+      console.error("Error:", err.message)
+      alert(err.message)
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
     <div className="w-full h-screen flex flex-col justify-center items-center">
-      <div className="w-full max-w-md px-6">
-        <div className="flex flex-col items-center mb-48">
-          <div className="w-72 h-10">
-            <img src={logo} alt="Logo" />
-          </div>
+      <div className="h-60 mb-4">
+        <div className="w-72 h-10">
+          <img src={logo} alt="Logo" />
         </div>
+      </div>
+      <div className="w-full max-w-md px-6 mb-32">
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="relative">
             <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none text-blue-400">
@@ -82,10 +112,18 @@ export default function Signin() {
           <button
             type="submit"
             className="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-xl transition duration-200"
+            disabled={loading}
           >
-            Sign in
+            {loading ? "Loging in..." : "Login"}
           </button>
         </form>
+        <div className="p-2 flex justify-center">
+          <h5>Don't have an account? {""}
+            <Link to="/signup">
+              <span className="text-[#184f71] font-semibold hover:underline">Sign up</span>
+            </Link>
+          </h5>
+        </div>
       </div>
     </div>
   )

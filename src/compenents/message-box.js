@@ -24,7 +24,7 @@ const MessageBox = ({ message }) => {
           ) : (
             <code
               className={`bg-gray-700 rounded p-1 text-sm ${
-                isUser ? "bg-blue-400" : "bg-gray-800"
+                isUser ? "bg-blue-400" : "bg-gray-400"
               }`}
               {...props}
             >

@@ -9,8 +9,7 @@ export default function DashboardSection() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjljM2I5ZjE4LWNiNzYtNDU1Ny1hYTBiLWZkMzAyMGFiYjJiYSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzQ3MDU2MDUyLCJleHAiOjE3NDk2NDgwNTJ9.BK0BNvrLtdrrf0YTAPXBba4HUrZfjbEqTzlWe_k_dWY"
-    // const token = localStorage.getItem("token");
+    const token = localStorage.getItem("token");
     const fetchTotalUser = async () => {
       try {
         const response = await fetch("http://localhost:3003/api/auth/total", {
@@ -35,8 +34,7 @@ export default function DashboardSection() {
     };
 
     const fetchUserBlock = async () => {
-      const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjljM2I5ZjE4LWNiNzYtNDU1Ny1hYTBiLWZkMzAyMGFiYjJiYSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzQ3MDU2MDUyLCJleHAiOjE3NDk2NDgwNTJ9.BK0BNvrLtdrrf0YTAPXBba4HUrZfjbEqTzlWe_k_dWY"
-      // const token = localStorage.getItem("token");
+      const token = localStorage.getItem("token");
       try {
         const response = await fetch("http://localhost:3003/api/users/blocks/total", {
           method: "GET",
@@ -60,8 +58,7 @@ export default function DashboardSection() {
     };
 
     const fetchUser = async () => {
-      const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjljM2I5ZjE4LWNiNzYtNDU1Ny1hYTBiLWZkMzAyMGFiYjJiYSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzQ3MDU2MDUyLCJleHAiOjE3NDk2NDgwNTJ9.BK0BNvrLtdrrf0YTAPXBba4HUrZfjbEqTzlWe_k_dWY"
-      // const token = localStorage.getItem("token");
+      const token = localStorage.getItem("token");
       try {
         const response = await fetch("http://localhost:3003/api/auth", {
           method: "GET",
