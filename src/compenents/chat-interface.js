@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Send, Loader2 } from "lucide-react";
+import { Send, LoaderPinwheel } from "lucide-react";
 import ChatMessage from "./chat-message";
 import { useParams } from "react-router-dom";
 
@@ -42,8 +42,7 @@ const ChatPage = () => {
     // `${import.meta.env.VITE_BASE_URL}/api/users/chats/askQuery`
 
     try {
-      const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjljM2I5ZjE4LWNiNzYtNDU1Ny1hYTBiLWZkMzAyMGFiYjJiYSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzQ3MDU2MDUyLCJleHAiOjE3NDk2NDgwNTJ9.BK0BNvrLtdrrf0YTAPXBba4HUrZfjbEqTzlWe_k_dWY"
-      // const token = localStorage.getItem("token");
+      const token = localStorage.getItem("token");
       const response = await fetch( "http://localhost:3003/api/users/chats/askQuery",
         {
           method: "POST",
@@ -95,10 +94,10 @@ const ChatPage = () => {
       <div className="flex flex-col w-full max-w-4xl">
         <main className="flex-1 overflow-auto p-4 space-y-4 w-full">
         {messages.length === 0 && (
-          <div className="flex flex-col items-center justify-center h-4/5 text-center text-black pointer-events-none">
-            <h1 className="text-3xl font-bold mb-4">{selectedCategory || "Hi, I'm WMAD GPT."}</h1>
-             <p className="text-lg">
-               How can i help you today?
+          <div className="flex flex-col items-center justify-center h-4/5 text-center text-gray-500 pointer-events-none">
+            <h1 className="text-3xl font-bold">{selectedCategory || "I'm ready to work,"}</h1>
+             <p className="text-5xl font-bold text-black">
+               Ask me anything
              </p>
           </div>
           )}
@@ -117,10 +116,10 @@ const ChatPage = () => {
           />
           <button
             type="submit"
-            className="bg-blue-600 p-4 h-16 rounded-r-xl disabled:bg-blue-800"
+            className="bg-gray-400 p-4 h-16 rounded-r-xl disabled:bg-blue-700"
             disabled={isLoading}
           >
-            {isLoading ? <Loader2 className="animate-spin" /> : <Send />}
+            {isLoading ? <LoaderPinwheel className="animate-spin text-white" /> : <Send />}
           </button>
         </form>
       </div>

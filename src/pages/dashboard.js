@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { FaUser, FaUserSlash } from 'react-icons/fa';
+import { LoaderPinwheel } from "lucide-react";
 
 export default function DashboardSection() {
   const [users, setUsers] = useState([]);
@@ -10,6 +11,7 @@ export default function DashboardSection() {
 
   useEffect(() => {
     const token = localStorage.getItem("token");
+    console.log("======>",token);
     const fetchTotalUser = async () => {
       try {
         const response = await fetch("http://localhost:3003/api/auth/total", {
@@ -45,15 +47,15 @@ export default function DashboardSection() {
         });
 
         if (!response.ok) {
-          throw new Error("Failed to fetch user block");
+          throw new Error("Failed to fetch total block");
         }
 
         const result = await response.json();
         console.log("User block fetched successfully:", result);
         setUserBlock(result.total);
       } catch (error) {
-        console.error("Error fetching user block:", error);
-        setError(error.message || "Failed to fetch user block.");
+        console.error("Error fetching total block:", error);
+        setError(error.message || "Failed to fetch total block.");
       }
     };
 
@@ -95,8 +97,8 @@ export default function DashboardSection() {
     return (
       <div className="w-full h-full flex justify-center items-center">
         <div className="flex flex-col items-center">
-          <div className="w-12 h-12 border-4 border-blue-500 border-dashed rounded-full animate-spin"></div>
-          <p className="mt-4 text-blue-500 font-semibold">Loading, please wait...</p>
+          <LoaderPinwheel className="animate-spin"></LoaderPinwheel>
+          <p className="mt-4 font-semibold">Loading, please wait...</p>
         </div>
       </div>
     );
@@ -112,50 +114,8 @@ export default function DashboardSection() {
   return (
     <div className="space-y-2 p-6 h-full">
       {/* Amount Boxes at Top */}
-      <div className="flex w-full overflow-hidden bg-gradient-to-b rounded-lg">
-        <div className="flex w-3/5 items-center justify-between p-6 bg-blue-300 rounded-lg mx-4 my-8 shadow-lg">
-          <div className="flex flex-col space-y-2">
-            <h2 className="text-3xl font-bold text-gray-800">Dicover your study with AI</h2>
-            <h2 className="text-2xl font-bold text-gray-800">WMAD GPT</h2>
-
-            <button className="mt-4 bg-blue-500 hover:bg-blue-600 text-white rounded-full px-6 py-2 flex items-center space-x-2">
-              <span>Be the first</span>
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path
-                  d="M9 18L15 12L9 6"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </button>
-          </div>
-
-          <div className="relative">
-            <div className="absolute inset-0 bg-gradient-to-b rounded-lg -z-10"></div>
-            <img
-              src="https://static.vecteezy.com/system/resources/previews/052/513/913/non_2x/robot-ai-technology-character-icon-free-png.png"
-              alt="Robot Character"
-              className="h-32 w-full object-cover"
-            />
-          </div>
-        </div>
-
-        <div className="flex w-2/5 items-center justify-center p-6 bg-white rounded-lg mx-4 my-8 shadow-lg">
-          <div className="relative">
-            <div className="absolute inset-0 bg-gradient-to-b from-blue-500 to-blue-400 rounded-lg -z-10"></div>
-            <img
-              src="https://bongsrey.sgp1.digitaloceanspaces.com/library/383/images/5d1ecb8986bbe.jpg"
-              alt="Robot Character"
-              className="h-40 w-full object-cover"
-            />
-          </div>
-        </div>
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 bg-white shadow-md p-4 rounded-md">
-        <div className="flex justify-center items-center bg-blue-800 p-6 rounded-md shadow text-center">
+      <div className="grid grid-cols-1 md:grid-cols-3 overflow-hidden bg-gradient-to-b rounded-lg">
+      <div className="flex w-4/5 items-center justify-center p-6 bg-blue-500 rounded-lg mx-4 my-8 shadow-lg">
           <div className="flex-1 flex justify-center mb-4">
             <FaUser className="text-white text-4xl" />
           </div>
@@ -163,10 +123,9 @@ export default function DashboardSection() {
             <h4 className="text-3xl font-bold text-white">{totalUser}</h4>
             <p className="text-sm font-bold text-white mt-2">Total User</p>
           </div>
-
         </div>
 
-        <div className="flex justify-center items-center bg-orange-600 p-6 rounded-md shadow text-center">
+        <div className="flex w-4/5 items-center justify-center p-6 bg-orange-500 rounded-lg mx-4 my-8 shadow-lg">
           <div className="flex-1 flex justify-center mb-4">
             <FaUserSlash className="text-white text-4xl" />
           </div>
@@ -175,6 +134,23 @@ export default function DashboardSection() {
             <p className="text-sm font-bold text-white mt-2">Total Block</p>
           </div>
 
+        </div>
+        <div className="flex w-4/5 items-center justify-center p-6 bg-white rounded-lg mx-4 my-8 shadow-lg">
+          <div className="relative">
+            <img
+              src="https://bongsrey.sgp1.digitaloceanspaces.com/library/383/images/5d1ecb8986bbe.jpg"
+              alt="Robot Character"
+              className="h-40 w-full object-cover"
+            />
+          </div>
+          <div className="relative">
+            <div className="absolute inset-0 bg-gradient-to-b rounded-lg -z-10"></div>
+            <img
+              src="https://static.vecteezy.com/system/resources/previews/052/513/913/non_2x/robot-ai-technology-character-icon-free-png.png"
+              alt="Robot Character"
+              className="h-32 w-full object-cover"
+            />
+          </div>
         </div>
       </div>
 
@@ -191,10 +167,10 @@ export default function DashboardSection() {
             </tr>
           </thead>
           <tbody>
-            {users.map((user) => (
+            {users.map((user, index) => (
               <tr key={user.id} className="border-b">
-                <td className="py-4 px-6">{user.id}</td>
-                <td className="py-4 px-6">
+                <td className="py-4 px-6">{index + 1}</td>
+                <td className="py-4 px-6 text-[#184f71] font-medium">
                   <div className="flex items-center gap-2">
                     {user.avatar && user.avatar !== "/placeholder.svg" ? (
                       <img
@@ -215,10 +191,9 @@ export default function DashboardSection() {
                     <span>{user.full_name || "Unknown"}</span>
                   </div>
                 </td>
-
                 <td className="py-4 px-6">{user.email}</td>
-                <td className="py-4 px-6">{user.created_at}</td>
-                <td className="py-4 px-6">{user.updated_at}</td>
+                <td className="py-4 px-6">{new Date(user.created_at).toLocaleString()}</td>
+                <td className="py-4 px-6">{new Date(user.updated_at).toLocaleString()}</td>
               </tr>
             ))}
           </tbody>
