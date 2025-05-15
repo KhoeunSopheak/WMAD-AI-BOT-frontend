@@ -60,7 +60,7 @@ export default function Signin() {
 
       localStorage.setItem("token", token);
       localStorage.setItem("userRole", role);
-      navigate("/");
+      navigate("/chat");
       console.log("Success:", data)
     } catch (err) {
       console.error("Error:", err.message)
