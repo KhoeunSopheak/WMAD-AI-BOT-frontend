@@ -9,7 +9,9 @@ import {
   FileQuestion,
   BookOpen,
   Menu,
-  History
+  History,
+  Users,
+  UserLock
 } from "lucide-react";
 import logo from "../assets/wmadlogo.png";
 
@@ -29,7 +31,10 @@ function Sidebar() {
       title: "General",
       items: [
         ...(userRole === "admin"
-          ? [{ id: 1, label: "Dashboard", path: "/dashboard", icon: <LayoutDashboard size={20} /> }]
+          ? [{ id: 1, label: "Dashboard", path: "/dashboard", icon: <LayoutDashboard size={20} /> },
+            { id: 1, label: "User", path: "/users", icon: <Users size={20} /> },
+            { id: 1, label: "Disable user", path: "/userLock", icon: <UserLock size={20} /> }
+          ]
           : []),
         { id: 2, label: "ChatWMAD GPT", path: "/chat", icon: <MessageCircle size={20} /> },
       ]
