@@ -72,10 +72,10 @@ function Sidebar() {
         ...(userRole === "admin"
           ? [{ id: 1, label: "Dashboard", path: "/dashboard", icon: <LayoutDashboard size={20} /> },
             { id: 1, label: "User", path: "/users", icon: <Users size={20} /> },
-            { id: 1, label: "Disable user", path: "/userLock", icon: <UserLock size={20} /> }
+            { id: 1, label: "Disable user", path: "/userlock", icon: <UserLock size={20} /> }
           ]
           : []),
-        { id: 2, label: "ChatWMAD GPT", path: "/chat", icon: <MessageCircle size={20} /> },
+        { id: 2, label: "ChatWMAD GPT", path: "/newchat", icon: <MessageCircle size={20} /> },
       ]
     },
     {
