@@ -7,8 +7,10 @@ import Signin from "./pages/signin";
 import Chat from "./pages/chat";
 import QuizPage from "./pages/quiz";
 import RoadMap from "./pages/roadmap";
-import DetailPage from "./pages/detailPage"
+import DetailPage from "./pages/detailPage";
 import Dashboard from "./pages/dashboard";
+import User from "./pages/user";
+import UserLock from "./pages/disableUser";
 
 function App() {
   return (
@@ -16,6 +18,8 @@ function App() {
       <Routes>
         <Route element={<Layout />}>
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/users" element={<User />} />
+          <Route path="/userLock" element={<UserLock />} />
           <Route path="/chat" element={<Chat />} />
           <Route path="/category/:categoryTitle" element={<Chat />} />
           <Route path="/category" element={<Category />} />
