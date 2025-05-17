@@ -7,10 +7,10 @@ const GenerateQuiz = () => {
   const [error, setError] = useState(null); // To manage error messages
   console.log(topic);
 
-  //const token = localStorage.getItem("token");
-  //console.log(token);
+  const token = localStorage.getItem("token");
+  console.log(token);
 
-  const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImY0NzI4NzQ3LWI4YmEtNDFmNi1iZjcwLWYwOWNhYzE3M2NhMSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzQ3MDMzMTQyLCJleHAiOjE3NDk2MjUxNDJ9.YnQehi_kECrixNTHAkQYAUKcDfNwhe4m5c_yE46IK78";
+  // const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImY0NzI4NzQ3LWI4YmEtNDFmNi1iZjcwLWYwOWNhYzE3M2NhMSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzQ3MDMzMTQyLCJleHAiOjE3NDk2MjUxNDJ9.YnQehi_kECrixNTHAkQYAUKcDfNwhe4m5c_yE46IK78";
 
   const headers = {
     "Content-Type": "application/json",
