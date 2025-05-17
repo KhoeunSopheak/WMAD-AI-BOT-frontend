@@ -5,6 +5,7 @@ import Category from "./pages/category";
 import Signup from "./pages/signup";
 import Signin from "./pages/signin";
 import Chat from "./pages/chat";
+import NewChat from "./pages/new-chat";
 import QuizPage from "./pages/quiz";
 import RoadMap from "./pages/roadmap";
 import DetailPage from "./pages/detailPage";
@@ -19,8 +20,9 @@ function App() {
         <Route element={<Layout />}>
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/users" element={<User />} />
-          <Route path="/userLock" element={<UserLock />} />
+          <Route path="/userlock" element={<UserLock />} />
           <Route path="/chat" element={<Chat />} />
+          <Route path="/newchat" element={<NewChat />} />
           <Route path="/category/:categoryTitle" element={<Chat />} />
           <Route path="/category" element={<Category />} />
           <Route path="/quiz" element={<QuizPage />} />
