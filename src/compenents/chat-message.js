@@ -6,25 +6,27 @@ const ChatMessage = ({ message }) => {
   const isUser = message.role === "user";
 
   return (
-    <div className={`flex ${isUser ? "justify-end" : "justify-start"} my-2`}>
+    <div className={`flex ${isUser ? "justify-end" : "justify-start"} mb-4 px-4`}>
       <div
-        className={`flex items-start space-x-2 max-w-3/4 ${
-          isUser ? "flex-row-reverse space-x-reverse" : ""
+        className={`flex items-start gap-3 max-w-[85%] ${
+          isUser ? "flex-row-reverse" : ""
         }`}
       >
-        {/* Icon Container */}
+        {/* Avatar Icon */}
         <div
-          className={`p-2 rounded-full text-white ${
-            isUser ? "bg-blue-800" : "bg-gray-600"
+          className={`flex-shrink-0 p-2 rounded-full ${
+            isUser ? "bg-blue-600 text-white" : "bg-gray-200 text-gray-700"
           }`}
         >
           {isUser ? <User size={20} /> : <Bot size={20} />}
         </div>
 
-        {/* Message Content */}
+        {/* Message Bubble */}
         <div
-          className={`p-3 rounded-lg text-black ${
-            isUser ? "bg-gray-200" : "bg-gray-300"
+          className={`p-3 rounded-lg whitespace-pre-wrap break-words ${
+            isUser 
+              ? "bg-blue-600 text-white rounded-tr-none" 
+              : "bg-gray-100 text-gray-800 rounded-tl-none"
           }`}
         >
           <MessageBox message={message} />

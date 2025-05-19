@@ -9,6 +9,7 @@ import QuizPage from "./pages/quiz";
 import RoadMap from "./pages/roadmap";
 import DetailPage from "./pages/detailPage"
 import Dashboard from "./pages/dashboard";
+import ChatHistoryBot from "./pages/chatHistory";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route element={<Layout />}>
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/chat" element={<Chat />} />
+          <Route path="/chatHistory/:id" element={<ChatHistoryBot />} />
           <Route path="/category/:categoryTitle" element={<Chat />} />
           <Route path="/category" element={<Category />} />
           <Route path="/quiz" element={<QuizPage />} />

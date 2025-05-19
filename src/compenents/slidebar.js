@@ -84,8 +84,8 @@ function Sidebar() {
   ];
 
   const handleClick = (chat) => {
-    navigate(`/chat/${chat.id}`);
-    setIsOpen(false); // close sidebar on mobile after click
+    navigate(`/chatHistory/${chat.id}`);
+    setIsOpen(false);
   };
 
   return (
