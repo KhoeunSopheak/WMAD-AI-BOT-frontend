@@ -56,12 +56,13 @@ export default function Signin() {
         throw new Error(data.message || "Something went wrong")
       }
 
-      const { token, role } = data;
+      const { token, role, user_id } = data;
 
       localStorage.setItem("token", token);
       localStorage.setItem("userRole", role);
-      navigate("/chat");
-      console.log("Success:", data)
+      localStorage.setItem("user_id", user_id);
+
+      navigate(`/chat/${user_id}`);
     } catch (err) {
       console.error("Error:", err.message)
       alert(err.message)

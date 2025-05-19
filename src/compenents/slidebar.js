@@ -16,8 +16,11 @@ import {
 } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 import logo from "../assets/wmadlogo.png";
+import { useParams } from "react-router-dom";
 
 function Sidebar() {
+  const { user_id } = useParams();
+
   const navigate = useNavigate();
   const location = useLocation();
   const [isOpen, setIsOpen] = useState(false);
@@ -26,6 +29,7 @@ function Sidebar() {
   // State for chat history
   const [history, setHistory] = useState([]);
   const [loading, setLoading] = useState(true);
+
 
   useEffect(() => {
     const role = localStorage.getItem("userRole");
@@ -42,7 +46,7 @@ function Sidebar() {
       }
 
       try {
-        const response = await fetch("http://localhost:3003/api/users/chats", {
+        const response = await fetch(`http://localhost:3003/api/users/chats/history/${user_id}`, {
           headers: {
             Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",
@@ -62,8 +66,8 @@ function Sidebar() {
       }
     };
 
-    fetchHistory();
-  }, []);
+    if (user_id)fetchHistory();
+  }, [user_id]);
 
   const menuSections = [
     {
@@ -71,8 +75,8 @@ function Sidebar() {
       items: [
         ...(userRole === "admin"
           ? [{ id: 1, label: "Dashboard", path: "/dashboard", icon: <LayoutDashboard size={20} /> },
-            { id: 1, label: "User", path: "/users", icon: <Users size={20} /> },
-            { id: 1, label: "Disable user", path: "/userlock", icon: <UserLock size={20} /> }
+          { id: 1, label: "User", path: "/users", icon: <Users size={20} /> },
+          { id: 1, label: "Disable user", path: "/userlock", icon: <UserLock size={20} /> }
           ]
           : []),
         { id: 2, label: "ChatWMAD GPT", path: "/newchat", icon: <MessageCircle size={20} /> },
@@ -135,9 +139,8 @@ function Sidebar() {
                           navigate(item.path);
                           setIsOpen(false);
                         }}
-                        className={`w-full flex items-center space-x-3 px-3 py-2 rounded-md text-sm transition-all ${
-                          isActive ? "bg-blue-100 text-blue-600" : "hover:bg-gray-100"
-                        }`}
+                        className={`w-full flex items-center space-x-3 px-3 py-2 rounded-md text-sm transition-all ${isActive ? "bg-blue-100 text-blue-600" : "hover:bg-gray-100"
+                          }`}
                       >
                         <span className={isActive ? "text-blue-600" : "text-gray-500"}>
                           {item.icon}
