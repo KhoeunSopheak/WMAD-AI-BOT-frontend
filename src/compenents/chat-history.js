@@ -34,11 +34,11 @@ const ChatHistory = () => {
 
         let formattedMessages = [];
 
-        // ✅ Format: full history exists
+        // Format: full history exists
         if (data.chat?.history && Array.isArray(data.chat.history)) {
           formattedMessages = data.chat.history;
         }
-        // ✅ Fallback: One question and answer
+        // allback: One question and answer
         else if (data.chat?.user_message && data.chat?.ai_response) {
           formattedMessages = [
             { role: "user", content: data.chat.user_message },
@@ -119,8 +119,8 @@ const ChatHistory = () => {
   };
 
   return (
-    <div className="flex justify-center h-full bg-white text-gray-900">
-      <div className="flex flex-col w-full max-w-4xl h-[90vh] border border-gray-300 rounded-lg shadow-md">
+    <div className="flex justify-center h-full text-gray-900">
+      <div className="flex flex-col w-full max-w-4xl">
         <main className="flex-1 overflow-auto p-4 space-y-4">
           {messages.length === 0 ? (
             <div className="flex flex-col items-center justify-center h-full text-gray-500 text-center">
@@ -137,7 +137,7 @@ const ChatHistory = () => {
 
         <form
           onSubmit={handleSubmit}
-          className="flex items-center p-4 border-t border-gray-300"
+          className="flex items-center p-4"
         >
           <input
             type="text"

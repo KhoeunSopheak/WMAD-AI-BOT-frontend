@@ -90,7 +90,7 @@ const MessageBox = ({ message }) => {
           blockquote: ({ node, ...props }) => (
             <blockquote 
               className={`border-l-4 pl-4 italic my-3 ${
-                isUser ? "border-blue-400 bg-blue-900/20" : "border-gray-400 bg-gray-200"
+                isUser ? "border-blue-400 bg-blue-900/20" : "border-gray-400 bg-yellow-400"
               }`} 
               {...props} 
             />

@@ -11,7 +11,6 @@ export default function DashboardSection() {
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-    console.log("======>",token);
     const fetchTotalUser = async () => {
       try {
         const response = await fetch("http://localhost:3003/api/auth/total", {
