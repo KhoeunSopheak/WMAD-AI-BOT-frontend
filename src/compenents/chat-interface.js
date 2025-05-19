@@ -32,8 +32,15 @@ const ChatPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!input.trim()) return;
-
-    const userMessage = { role: "user", content: input, selectedCategory };
+  
+    const finalCategory = selectedCategory?.trim() || "General";
+  
+    const userMessage = {
+      role: "user",
+      content: input,
+      selectedCategory: finalCategory
+    };
+  
     setMessages((prev) => [...prev, userMessage]);
     setInput("");
     setSelectedCategory("");
@@ -51,7 +58,7 @@ const ChatPage = () => {
             Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify({ 
-            category: selectedCategory || null,
+            category: finalCategory,
             user_message: input,
              isStream: true 
           }),

@@ -14,7 +14,7 @@ export default function Signup() {
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-
+  
   const handleChange = (e) => {
     const { name, value } = e.target
     setFormData((prev) => ({
@@ -65,7 +65,8 @@ export default function Signup() {
 
       localStorage.setItem("token", token);
       localStorage.setItem("userRole", role);
-      navigate("/chat");
+      
+      navigate("/");
       console.log("Success:", data)
     } catch (err) {
       console.error("Error:", err.message)
