@@ -10,6 +10,7 @@ import QuizPage from "./pages/quiz";
 import RoadMap from "./pages/roadmap";
 import DetailPage from "./pages/detailPage";
 import Dashboard from "./pages/dashboard";
+import ChatHistoryBot from "./pages/chatHistory";
 import User from "./pages/user";
 import UserLock from "./pages/disableUser";
 
@@ -22,6 +23,7 @@ function App() {
           <Route path="/users" element={<User />} />
           <Route path="/userlock" element={<UserLock />} />
           <Route path="/chat" element={<Chat />} />
+          <Route path="/chatHistory/:id" element={<ChatHistoryBot />} />
           <Route path="/newchat" element={<NewChat />} />
           <Route path="/category/:categoryTitle" element={<Chat />} />
           <Route path="/category" element={<Category />} />
