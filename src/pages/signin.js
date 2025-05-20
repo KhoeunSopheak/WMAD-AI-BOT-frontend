@@ -73,12 +73,12 @@ export default function Signin() {
 
   return (
     <div className="w-full h-screen flex flex-col justify-center items-center">
-      <div className="h-60 mb-4">
-        <div className="w-72 h-10">
+      <div className="h-60 mb-20">
+        <div className="w-96">
           <img src={logo} alt="Logo" />
         </div>
       </div>
-      <div className="w-full max-w-md px-6 mb-32">
+      <div className="w-full max-w-xl px-6 mb-32">
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="relative">
             <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none text-blue-400">
@@ -90,7 +90,7 @@ export default function Signin() {
               value={formData.email}
               onChange={handleChange}
               placeholder="Email"
-              className="w-full pl-10 pr-3 py-2 border border-blue-200 rounded-xl focus:outline-none focus:ring-1 focus:ring-blue-500"
+              className="w-full pl-10 pr-3 py-3 border border-blue-200 rounded-xl focus:outline-none focus:ring-1 focus:ring-blue-500"
               required
             />
             {errors.email && <p className="text-sm text-red-500 mt-1">{errors.email}</p>}
@@ -105,23 +105,23 @@ export default function Signin() {
               value={formData.password}
               onChange={handleChange}
               placeholder="Password"
-              className="w-full pl-10 pr-3 py-2 border border-blue-200 rounded-xl focus:outline-none focus:ring-1 focus:ring-blue-500"
+              className="w-full pl-10 pr-3 py-3 border border-blue-200 rounded-xl focus:outline-none focus:ring-1 focus:ring-blue-500"
               required
             />
             {errors.password && <p className="text-sm text-red-500 mt-1">{errors.password}</p>}
           </div>
           <button
             type="submit"
-            className="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-xl transition duration-200"
+            className="w-full bg-blue-500 hover:bg-blue-600 text-white py-3 rounded-xl transition duration-200"
             disabled={loading}
           >
             {loading ? "Loging in..." : "Login"}
           </button>
         </form>
-        <div className="p-2 flex justify-center">
+        <div className="p-2 flex justify-center mt-10 text-white">
           <h5>Don't have an account? {""}
             <Link to="/signup">
-              <span className="text-[#184f71] font-semibold hover:underline">Sign up</span>
+              <span className="text-white font-semibold hover:underline">Sign up</span>
             </Link>
           </h5>
         </div>
