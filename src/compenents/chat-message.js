@@ -1,13 +1,15 @@
 import React from "react";
 import { User, Bot } from "lucide-react";
-import MessageBox from "../compenents/message-box";
+import MessageBox from "../compenents/message-box"; // Make sure the path is correct
 
 const ChatMessage = ({ message }) => {
   const isUser = message.role === "user";
 
-  // Safely convert content to string or fallback
-  const content =
-    typeof message.content === "string" && message.content.trim() !== ""
+  // Normalize message content
+  const normalizedContent =
+    Array.isArray(message.content)
+      ? message.content.filter(Boolean).join("\n\n")
+      : typeof message.content === "string" && message.content.trim() !== ""
       ? message.content
       : "[No content]";
 
@@ -18,7 +20,7 @@ const ChatMessage = ({ message }) => {
           isUser ? "flex-row-reverse" : ""
         }`}
       >
-        {/* Avatar Icon */}
+        {/* Avatar */}
         <div
           className={`flex-shrink-0 p-2 rounded-full ${
             isUser ? "bg-blue-600 text-white" : "bg-gray-200 text-gray-700"
@@ -27,7 +29,7 @@ const ChatMessage = ({ message }) => {
           {isUser ? <User size={20} /> : <Bot size={20} />}
         </div>
 
-        {/* Message Bubble */}
+        {/* Message */}
         <div
           className={`p-3 rounded-lg whitespace-pre-wrap break-words ${
             isUser
@@ -35,7 +37,7 @@ const ChatMessage = ({ message }) => {
               : "bg-gray-100 text-gray-800 rounded-tl-none"
           }`}
         >
-          <MessageBox message={{ role: message.role, content }} />
+          <MessageBox message={{ role: message.role, content: normalizedContent }} />
         </div>
       </div>
     </div>

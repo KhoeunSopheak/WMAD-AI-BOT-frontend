@@ -6,16 +6,22 @@ import { dracula } from "react-syntax-highlighter/dist/esm/styles/prism";
 const MessageBox = ({ message }) => {
   const isUser = message.role === "user";
 
-  // Join array content into string with paragraph breaks if needed
-  const contentToRender = Array.isArray(message.content)
-    ? message.content.join("\n\n")
-    : message.content || "[No content]";
+  // Normalize content
+  const contentToRender =
+    Array.isArray(message.content)
+      ? message.content.filter(Boolean).join("\n\n")
+      : typeof message.content === "string" && message.content.trim() !== ""
+      ? message.content
+      : "[No content]";
 
   return (
     <div className={`text-sm ${isUser ? "text-white" : "text-gray-800"}`}>
       <ReactMarkdown
         components={{
+          // Paragraph
           p: ({ node, ...props }) => <p className="mb-4 last:mb-0" {...props} />,
+
+          // Headers
           h1: ({ node, ...props }) => (
             <h1 className="text-2xl font-bold mb-3 mt-4" {...props} />
           ),
@@ -25,6 +31,8 @@ const MessageBox = ({ message }) => {
           h3: ({ node, ...props }) => (
             <h3 className="text-lg font-bold mb-2 mt-3" {...props} />
           ),
+
+          // Lists
           ul: ({ node, ...props }) => (
             <ul className="list-disc pl-5 mb-4" {...props} />
           ),
@@ -32,6 +40,8 @@ const MessageBox = ({ message }) => {
             <ol className="list-decimal pl-5 mb-4" {...props} />
           ),
           li: ({ node, ...props }) => <li className="mb-1" {...props} />,
+
+          // Links
           a: ({ node, ...props }) => (
             <a
               className="text-blue-500 hover:underline"
@@ -40,8 +50,11 @@ const MessageBox = ({ message }) => {
               {...props}
             />
           ),
+
+          // Code blocks and inline code
           code({ inline, className, children, ...props }) {
             const match = /language-(\w+)/.exec(className || "");
+            const codeContent = String(children).replace(/\n$/, "");
 
             if (!inline && match) {
               return (
@@ -60,7 +73,7 @@ const MessageBox = ({ message }) => {
                     }}
                     {...props}
                   >
-                    {String(children).replace(/\n$/, "")}
+                    {codeContent}
                   </SyntaxHighlighter>
                 </div>
               );
@@ -73,14 +86,16 @@ const MessageBox = ({ message }) => {
                 }`}
                 {...props}
               >
-                {children}
+                {codeContent}
               </code>
             );
           },
+
+          // Blockquotes
           blockquote: ({ node, ...props }) => (
             <blockquote
               className={`border-l-4 pl-4 italic my-3 ${
-                isUser ? "border-blue-400 bg-blue-900/20" : "border-gray-400 bg-yellow-400"
+                isUser ? "border-blue-400 bg-blue-900/20" : "border-gray-400 bg-yellow-100"
               }`}
               {...props}
             />
