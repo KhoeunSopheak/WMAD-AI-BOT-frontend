@@ -6,16 +6,22 @@ import { dracula } from "react-syntax-highlighter/dist/esm/styles/prism";
 const MessageBox = ({ message }) => {
   const isUser = message.role === "user";
 
+  // Normalize content
+  const contentToRender =
+    Array.isArray(message.content)
+      ? message.content.filter(Boolean).join("\n\n")
+      : typeof message.content === "string" && message.content.trim() !== ""
+      ? message.content
+      : "[No content]";
+
   return (
     <div className={`text-sm ${isUser ? "text-white" : "text-gray-800"}`}>
       <ReactMarkdown
         components={{
-          // Paragraph styling
-          p: ({ node, ...props }) => (
-            <p className="mb-4 last:mb-0" {...props} />
-          ),
-          
-          // Headers styling
+          // Paragraph
+          p: ({ node, ...props }) => <p className="mb-4 last:mb-0" {...props} />,
+
+          // Headers
           h1: ({ node, ...props }) => (
             <h1 className="text-2xl font-bold mb-3 mt-4" {...props} />
           ),
@@ -26,31 +32,30 @@ const MessageBox = ({ message }) => {
             <h3 className="text-lg font-bold mb-2 mt-3" {...props} />
           ),
 
-          // List styling
+          // Lists
           ul: ({ node, ...props }) => (
             <ul className="list-disc pl-5 mb-4" {...props} />
           ),
           ol: ({ node, ...props }) => (
             <ol className="list-decimal pl-5 mb-4" {...props} />
           ),
-          li: ({ node, ...props }) => (
-            <li className="mb-1" {...props} />
-          ),
+          li: ({ node, ...props }) => <li className="mb-1" {...props} />,
 
-          // Link styling
+          // Links
           a: ({ node, ...props }) => (
-            <a 
-              className="text-blue-500 hover:underline" 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              {...props} 
+            <a
+              className="text-blue-500 hover:underline"
+              target="_blank"
+              rel="noopener noreferrer"
+              {...props}
             />
           ),
 
-          // Code block styling
+          // Code blocks and inline code
           code({ inline, className, children, ...props }) {
             const match = /language-(\w+)/.exec(className || "");
-            
+            const codeContent = String(children).replace(/\n$/, "");
+
             if (!inline && match) {
               return (
                 <div className="my-2 rounded-md overflow-hidden">
@@ -68,12 +73,12 @@ const MessageBox = ({ message }) => {
                     }}
                     {...props}
                   >
-                    {String(children).replace(/\n$/, "")}
+                    {codeContent}
                   </SyntaxHighlighter>
                 </div>
               );
             }
-            
+
             return (
               <code
                 className={`font-mono text-xs px-1.5 py-0.5 rounded ${
@@ -81,23 +86,23 @@ const MessageBox = ({ message }) => {
                 }`}
                 {...props}
               >
-                {children}
+                {codeContent}
               </code>
             );
           },
 
-          // Blockquote styling
+          // Blockquotes
           blockquote: ({ node, ...props }) => (
-            <blockquote 
+            <blockquote
               className={`border-l-4 pl-4 italic my-3 ${
-                isUser ? "border-blue-400 bg-blue-900/20" : "border-gray-400 bg-yellow-400"
-              }`} 
-              {...props} 
+                isUser ? "border-blue-400 bg-blue-900/20" : "border-gray-400 bg-yellow-100"
+              }`}
+              {...props}
             />
           ),
         }}
       >
-        {message.content}
+        {contentToRender}
       </ReactMarkdown>
     </div>
   );
