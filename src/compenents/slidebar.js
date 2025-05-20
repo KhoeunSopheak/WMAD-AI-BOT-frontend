@@ -16,10 +16,8 @@ import {
 } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 import logo from "../assets/wmadlogo.png";
-import { useParams } from "react-router-dom";
 
 function Sidebar() {
-  const { user_id } = useParams();
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -35,6 +33,8 @@ function Sidebar() {
     const role = localStorage.getItem("userRole");
     setUserRole(role);
   }, []);
+
+  const user_id = localStorage.getItem("user_id");
 
   useEffect(() => {
     const fetchHistory = async () => {

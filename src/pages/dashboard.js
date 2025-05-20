@@ -114,23 +114,23 @@ export default function DashboardSection() {
     <div className="space-y-2 p-6 h-full">
       {/* Amount Boxes at Top */}
       <div className="grid grid-cols-1 md:grid-cols-3 overflow-hidden bg-gradient-to-b rounded-lg">
-      <div className="flex w-4/5 items-center justify-center p-6 bg-blue-500 rounded-lg mx-4 my-8 shadow-lg">
+        <div className="flex w-4/5 items-center justify-center p-6 bg-[#C4C3E3] border rounded-lg mx-4 my-8 shadow-lg">
           <div className="flex-1 flex justify-center mb-4">
-            <FaUser className="text-white text-4xl" />
+            <FaUser className="text-black text-4xl" />
           </div>
           <div className="flex-1 flex flex-col justify-start items-start">
-            <h4 className="text-3xl font-bold text-white">{totalUser}</h4>
-            <p className="text-sm font-bold text-white mt-2">Total User</p>
+            <h4 className="text-3xl font-bold text-black">{totalUser}</h4>
+            <p className="text-sm font-bold text-black mt-2">Total User</p>
           </div>
         </div>
 
-        <div className="flex w-4/5 items-center justify-center p-6 bg-orange-500 rounded-lg mx-4 my-8 shadow-lg">
+        <div className="flex w-4/5 items-center justify-center p-6 bg-[#FDF8E2] border rounded-lg mx-4 my-8 shadow-lg">
           <div className="flex-1 flex justify-center mb-4">
-            <FaUserSlash className="text-white text-4xl" />
+            <FaUserSlash className="text-black text-4xl" />
           </div>
           <div className="flex-1 flex flex-col justify-start items-start">
-            <h4 className="text-3xl font-bold text-white">{userBlock}</h4>
-            <p className="text-sm font-bold text-white mt-2">Total Block</p>
+            <h4 className="text-3xl font-bold text-black">{userBlock}</h4>
+            <p className="text-sm font-bold text-black mt-2">Total Block</p>
           </div>
 
         </div>
@@ -153,51 +153,39 @@ export default function DashboardSection() {
         </div>
       </div>
 
-      {/* Scrollable Table */}
-      <div className="bg-white shadow rounded-md overflow-auto max-h-[650px]">
-        <table className="min-w-full">
-          <thead className="bg-gray-100 sticky top-0">
-            <tr>
-              <th className="py-3 px-6 text-left">User ID</th>
-              <th className="py-3 px-6 text-left">Full Name</th>
-              <th className="py-3 px-6 text-left">Email</th>
-              <th className="py-3 px-6 text-left">Created At</th>
-              <th className="py-3 px-6 text-left">Updated At</th>
-            </tr>
-          </thead>
-          <tbody>
-            {users.map((user, index) => (
-              <tr key={user.id} className="border-b">
-                <td className="py-4 px-6">{index + 1}</td>
-                <td className="py-4 px-6 text-[#184f71] font-medium">
-                  <div className="flex items-center gap-2">
-                    {user.avatar && user.avatar !== "/placeholder.svg" ? (
-                      <img
-                        src={user.avatar}
-                        alt={user.full_name || "Unknown"}
-                        width={32}
-                        height={32}
-                        className="rounded-full"
-                      />
-                    ) : (
-                      <div
-                        className="w-8 h-8 rounded-full flex items-center justify-center text-white font-bold"
-                        style={{ backgroundColor: getColorByFirstLetter(user.full_name?.[0]) }}
-                      >
-                        {user.full_name?.[0]?.toUpperCase() || "U"}
-                      </div>
-                    )}
-                    <span>{user.full_name || "Unknown"}</span>
-                  </div>
-                </td>
-                <td className="py-4 px-6">{user.email}</td>
-                <td className="py-4 px-6">{new Date(user.created_at).toLocaleString()}</td>
-                <td className="py-4 px-6">{new Date(user.updated_at).toLocaleString()}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+      {/* Scrollable Card */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-h-[650px] overflow-auto p-4 bg-white rounded-md shadow">
+        {users.map((user, index) => (
+          <div key={user.id} className="bg-gray-50 rounded-xl p-4 shadow border border-gray-200">
+            <div className="flex items-center gap-4 mb-4">
+              {user.avatar && user.avatar !== "/placeholder.svg" ? (
+                <img
+                  src={user.avatar}
+                  alt={user.full_name || "Unknown"}
+                  className="w-12 h-12 rounded-full object-cover"
+                />
+              ) : (
+                <div
+                  className="w-12 h-12 rounded-full flex items-center justify-center text-white font-bold"
+                  style={{ backgroundColor: getColorByFirstLetter(user.full_name?.[0]) }}
+                >
+                  {user.full_name?.[0]?.toUpperCase() || "U"}
+                </div>
+              )}
+              <div>
+                <h2 className="text-[#184f71] font-semibold">{user.full_name || "Unknown"}</h2>
+                <p className="text-sm text-blue-600">{user.email}</p>
+              </div>
+            </div>
+            <div className="text-sm text-gray-700">
+              <p><span className="font-medium">User ID:</span> {index + 1}</p>
+              <p><span className="font-medium">Created:</span> {new Date(user.created_at).toLocaleString()}</p>
+              <p><span className="font-medium">Updated:</span> {new Date(user.updated_at).toLocaleString()}</p>
+            </div>
+          </div>
+        ))}
       </div>
+
     </div>
   )
 }
