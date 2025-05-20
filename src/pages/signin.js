@@ -62,7 +62,7 @@ export default function Signin() {
       localStorage.setItem("userRole", role);
       localStorage.setItem("user_id", user_id);
 
-      navigate(`/chat/${user_id}`);
+      navigate(`/chat`);
     } catch (err) {
       console.error("Error:", err.message)
       alert(err.message)
