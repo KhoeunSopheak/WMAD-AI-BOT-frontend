@@ -1,9 +1,15 @@
 import React from "react";
 import { User, Bot } from "lucide-react";
-import MessageBox from "./message-box";
+import MessageBox from "../compenents/message-box";
 
 const ChatMessage = ({ message }) => {
   const isUser = message.role === "user";
+
+  // Safely convert content to string or fallback
+  const content =
+    typeof message.content === "string" && message.content.trim() !== ""
+      ? message.content
+      : "[No content]";
 
   return (
     <div className={`flex ${isUser ? "justify-end" : "justify-start"} mb-4 px-4`}>
@@ -24,12 +30,12 @@ const ChatMessage = ({ message }) => {
         {/* Message Bubble */}
         <div
           className={`p-3 rounded-lg whitespace-pre-wrap break-words ${
-            isUser 
-              ? "bg-blue-600 text-white rounded-tr-none" 
+            isUser
+              ? "bg-blue-600 text-white rounded-tr-none"
               : "bg-gray-100 text-gray-800 rounded-tl-none"
           }`}
         >
-          <MessageBox message={message} />
+          <MessageBox message={{ role: message.role, content }} />
         </div>
       </div>
     </div>

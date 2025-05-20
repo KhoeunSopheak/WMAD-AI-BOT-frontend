@@ -16,10 +16,8 @@ import {
 } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 import logo from "../assets/wmadlogo.png";
-import { useParams } from "react-router-dom";
 
 function Sidebar() {
-  const { user_id } = useParams();
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -36,9 +34,11 @@ function Sidebar() {
     setUserRole(role);
   }, []);
 
+  const user_id = localStorage.getItem("user_id");
   useEffect(() => {
     const fetchHistory = async () => {
       const token = localStorage.getItem("token");
+      
       if (!token) {
         console.error("No token found");
         setLoading(false);
