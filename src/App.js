@@ -23,7 +23,7 @@ function App() {
           <Route path="/users" element={<User />} />
           <Route path="/userlock" element={<UserLock />} />
           <Route path="/chat/:user_id" element={<Chat />} />
-          <Route path="/chatHistory/:user_id" element={<ChatHistoryBot />} />
+          <Route path="/chatHistory/:id" element={<ChatHistoryBot />} />
           <Route path="/newchat" element={<NewChat />} />
           <Route path="/category/:categoryTitle" element={<Chat />} />
           <Route path="/category" element={<Category />} />
