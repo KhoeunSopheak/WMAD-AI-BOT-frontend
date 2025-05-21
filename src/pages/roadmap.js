@@ -4,6 +4,7 @@ const RoadMap = () => {
   const [topic, setTopic] = useState("");
   const [loading, setLoading] = useState(false);
   const [roadmapItems, setRoadmapItems] = useState([]);
+  const [visibleCount, setVisibleCount] = useState(5);
   const [expandedItems, setExpandedItems] = useState({});
   const token = localStorage.getItem("token");
 
@@ -63,6 +64,7 @@ const RoadMap = () => {
     }
   };
 
+  const user_id = localStorage.getItem("user_id");
   // Load all existing roadmaps
   useEffect(() => {
     if (!token) return;
@@ -70,8 +72,9 @@ const RoadMap = () => {
     const fetchAllRoadmaps = async () => {
       try {
         const response = await fetch(
-          "http://localhost:3003/api/users/roadmaps",
+          `http://localhost:3003/api/users/roadmaps/generate/${user_id}`,
           {
+            method: "GET",
             headers: { Authorization: `Bearer ${token}` },
           }
         );
@@ -103,26 +106,53 @@ const RoadMap = () => {
     };
 
     fetchAllRoadmaps();
-  }, [token]);
+  }, [user_id, token]);
+
+  const handleDelete = async (id) => {
+    setLoading(true);
+  
+    try {
+      const res = await fetch(`http://localhost:3003/api/users/roadmaps/${id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+  
+      if (!res.ok) throw new Error("Failed to delete");
+      setRoadmapItems((prev) => prev.filter((item) => item.id !== id));
+    } catch (error) {
+      console.error("Error deleting quiz:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+  
+
+  const handleSeeMore = () => {
+    setVisibleCount((prev) => prev + 5);
+  };
 
   return (
-    <div className="min-h-screen bg-gray-100 p-4">
+    <div className="h-screen w-full p-4">
+      <h2 className="text-2xl font-bold mb-4 text-center">AI Power Roadmap Generator</h2>
       {/* Form to add roadmap */}
       <form
         onSubmit={handleSubmit}
-        className="p-4 flex gap-2 bg-white rounded shadow"
+        className="p-4 flex gap-2 rounded"
       >
         <input
           type="text"
           value={topic}
           onChange={(e) => setTopic(e.target.value)}
-          placeholder="Enter a learning topic..."
-          className="flex-grow border p-2 rounded"
+          placeholder="Enter a learning title..."
+          className="flex-grow border p-2 rounded h-14"
           disabled={loading}
         />
         <button
           type="submit"
-          className="bg-blue-500 text-white px-4 py-2 rounded"
+          className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-800"
           disabled={loading}
         >
           {loading ? "..." : "+"}
@@ -130,17 +160,22 @@ const RoadMap = () => {
       </form>
 
       {/* List of roadmaps */}
-      <div className="space-y-2 mt-4">
+      <div className="space-y-3 mt-4">
         {roadmapItems.length === 0 ? (
-          <div className="text-center text-gray-600">No roadmap items yet.</div>
+          <div className="text-center text-gray-600 mt-8">
+          <p className="text-lg font-semibold">No roadmap items yet.</p>
+          <p className="text-sm mt-2">Interested in testing your knowledge?</p>
+          <p className="text-sm">Try generating a roadmap by entering a topic above!</p>
+        </div>
+        
         ) : (
-          roadmapItems.map((item) => (
+          roadmapItems.slice(0, visibleCount).map((item) => (
             <div key={item.id} className="bg-white rounded shadow">
               <button
                 className="w-full text-left px-4 py-3 flex justify-between items-center"
                 onClick={() => toggleExpand(item.id)}
               >
-                <span className="font-semibold">{item.title}</span>
+                <span className="font-semibold"><span className="text-blue-600">Title:</span> {item.title}</span>
                 <span>{expandedItems[item.id] ? "▾" : "▸"}</span>
               </button>
 
@@ -162,12 +197,28 @@ const RoadMap = () => {
                       )}
                     </div>
                   ))}
+                  <div  className="w-full flex justify-end">
+                    <button 
+                    onClick={() => handleDelete(item.id)}
+                    className="px-8 py-2 rounded bg-red-500 text-white"
+                    >Delete</button>
+                    </div>
                 </div>
               )}
             </div>
           ))
         )}
       </div>
+      {visibleCount < roadmapItems.length && (
+        <div className="text-center mt-6">
+          <button
+            onClick={handleSeeMore}
+            className="border border-blue-600 text-black px-6 py-2 rounded-md shadow hover:text-white hover:bg-blue-800"
+          >
+            See More
+          </button>
+        </div>
+      )}
     </div>
   );
 };
