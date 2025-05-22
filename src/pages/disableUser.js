@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { FaUser, FaUserSlash } from 'react-icons/fa';
 import { LoaderPinwheel } from "lucide-react";
 
 export default function UserLock() {

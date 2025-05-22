@@ -125,7 +125,6 @@ const GenerateQuiz = () => {
               </p>
               <div className="grid grid-cols-1 gap-2 mt-2">
                 {quiz.options.map((opt, i) => {
-                  const isCorrect = quiz.correct_answer === opt;
                   const isSelected = answer?.selected === opt;
 
                   let bg = "bg-white";
