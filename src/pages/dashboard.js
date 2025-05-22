@@ -114,23 +114,23 @@ export default function DashboardSection() {
     <div className="space-y-2 p-6 h-full">
       {/* Amount Boxes at Top */}
       <div className="grid grid-cols-1 md:grid-cols-3 overflow-hidden bg-gradient-to-b rounded-lg">
-        <div className="flex w-4/5 items-center justify-center p-6 bg-[#C4C3E3] border rounded-lg mx-4 my-8 shadow-lg">
+        <div className="flex w-4/5 items-center justify-center p-6 bg-[#2620e3] border rounded-lg mx-4 my-8 shadow-lg">
           <div className="flex-1 flex justify-center mb-4">
-            <FaUser className="text-black text-4xl" />
+            <FaUser className="text-white text-4xl" />
           </div>
           <div className="flex-1 flex flex-col justify-start items-start">
-            <h4 className="text-3xl font-bold text-black">{totalUser}</h4>
-            <p className="text-sm font-bold text-black mt-2">Total User</p>
+            <h4 className="text-3xl font-bold text-white">{totalUser}</h4>
+            <p className="text-sm font-bold text-white mt-2">Total User</p>
           </div>
         </div>
 
-        <div className="flex w-4/5 items-center justify-center p-6 bg-[#FDF8E2] border rounded-lg mx-4 my-8 shadow-lg">
+        <div className="flex w-4/5 items-center justify-center p-6 bg-[#eba421] border rounded-lg mx-4 my-8 shadow-lg">
           <div className="flex-1 flex justify-center mb-4">
-            <FaUserSlash className="text-black text-4xl" />
+            <FaUserSlash className="text-white text-4xl" />
           </div>
           <div className="flex-1 flex flex-col justify-start items-start">
-            <h4 className="text-3xl font-bold text-black">{userBlock}</h4>
-            <p className="text-sm font-bold text-black mt-2">Total Block</p>
+            <h4 className="text-3xl font-bold text-white">{userBlock}</h4>
+            <p className="text-sm font-bold text-white mt-2">Total Block</p>
           </div>
 
         </div>

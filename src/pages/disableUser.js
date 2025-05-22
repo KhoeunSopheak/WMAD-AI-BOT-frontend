@@ -95,7 +95,11 @@ export default function UserLock() {
                         </tr>
                     </thead>
                     <tbody>
-                        {users.map((user, index) => (
+                        {users.length === 0 ? (
+                            <div className=" text-center text-gray-600 mt-8">
+                            <p className="text-lg font-semibold">There are no user block.</p>
+                          </div>
+                        ) : (users.map((user, index) => (
                             <tr key={user.id} className="border-b">
                                 <td className="py-4 px-6">{index + 1}</td>
                                 <td className="py-4 px-6 text-[#184f71] font-medium">
@@ -132,7 +136,7 @@ export default function UserLock() {
                                     </button>
                                 </td>
                             </tr>
-                        ))}
+                        )))}
                     </tbody>
                 </table>
             </div>

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Navigation2, LoaderPinwheel } from "lucide-react";
 
 const RoadMap = () => {
   const [topic, setTopic] = useState("");
@@ -67,21 +68,22 @@ const RoadMap = () => {
   const user_id = localStorage.getItem("user_id");
   // Load all existing roadmaps
   useEffect(() => {
-    if (!token) return;
-
+    const token = localStorage.getItem("token");
     const fetchAllRoadmaps = async () => {
       try {
         const response = await fetch(
           `http://localhost:3003/api/users/roadmaps/generate/${user_id}`,
           {
             method: "GET",
-            headers: { Authorization: `Bearer ${token}` },
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
           }
         );
-        if (!response.ok) throw new Error("Failed to fetch");
+        if (!response.ok) throw new Error("Failed to fetch Roadmap");
 
         const data = await response.json();
-        console.log("Roadmaps data:", data);
 
         if (data.roadmaps && Array.isArray(data.roadmaps)) {
           const allRoadmaps = data.roadmaps.map((r) => ({
@@ -106,7 +108,7 @@ const RoadMap = () => {
     };
 
     fetchAllRoadmaps();
-  }, [user_id, token]);
+  }, [user_id]);
 
   const handleDelete = async (id) => {
     setLoading(true);
@@ -123,7 +125,7 @@ const RoadMap = () => {
       if (!res.ok) throw new Error("Failed to delete");
       setRoadmapItems((prev) => prev.filter((item) => item.id !== id));
     } catch (error) {
-      console.error("Error deleting quiz:", error);
+      console.error("Error deleting roadmap:", error);
     } finally {
       setLoading(false);
     }
@@ -140,7 +142,7 @@ const RoadMap = () => {
       {/* Form to add roadmap */}
       <form
         onSubmit={handleSubmit}
-        className="p-4 flex gap-2 rounded"
+        className="p-4 flex gap-2 rounded sticky top-0 z-30"
       >
         <input
           type="text"
@@ -152,10 +154,10 @@ const RoadMap = () => {
         />
         <button
           type="submit"
-          className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-800"
+          className="bg-blue-600 text-white px-6 py-2 rounded disabled:bg-blue-700"
           disabled={loading}
         >
-          {loading ? "..." : "+"}
+          {loading ? <LoaderPinwheel className="animate-spin text-white" />: <Navigation2 />}
         </button>
       </form>
 
