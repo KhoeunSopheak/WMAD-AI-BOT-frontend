@@ -17,7 +17,7 @@ function History() {
       }
 
       try {
-        const response = await fetch("http://localhost:3003/api/users/chats", {
+        const response = await fetch(`${import.meta.env.VITE_BASE_URL}/api/users/chats`, {
           headers: {
             Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",

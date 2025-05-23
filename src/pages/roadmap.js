@@ -30,7 +30,7 @@ const RoadMap = () => {
 
     try {
       const response = await fetch(
-        "http://localhost:3003/api/users/roadmaps/generate-roadmap",
+        `${import.meta.env.VITE_BASE_URL}/api/users/roadmaps/generate-roadmap`,
         {
           method: "POST",
           headers: {
@@ -72,7 +72,7 @@ const RoadMap = () => {
     const fetchAllRoadmaps = async () => {
       try {
         const response = await fetch(
-          `http://localhost:3003/api/users/roadmaps/generate/${user_id}`,
+          `${import.meta.env.VITE_BASE_URL}/api/users/roadmaps/generate/${user_id}`,
           {
             method: "GET",
             headers: {
@@ -114,7 +114,7 @@ const RoadMap = () => {
     setLoading(true);
   
     try {
-      const res = await fetch(`http://localhost:3003/api/users/roadmaps/${id}`, {
+      const res = await fetch(`${import.meta.env.VITE_BASE_URL}/api/users/roadmaps/${id}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",

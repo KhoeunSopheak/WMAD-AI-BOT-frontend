@@ -48,7 +48,7 @@ export default function Signup() {
     setLoading(true);
 
     try {
-      const res = await fetch("http://localhost:3003/api/auth/register", {
+      const res = await fetch(`${import.meta.env.VITE_BASE_URL}/api/auth/register`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -67,15 +67,12 @@ export default function Signup() {
       localStorage.setItem("userRole", role);
       
       navigate("/");
-      console.log("Success:", data)
     } catch (err) {
       console.error("Error:", err.message)
       alert(err.message)
     } finally {
       setLoading(false)
     }
-
-
   }
 
   return (

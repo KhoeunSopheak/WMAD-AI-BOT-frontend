@@ -13,7 +13,7 @@ export default function DashboardSection() {
     const token = localStorage.getItem("token");
     const fetchTotalUser = async () => {
       try {
-        const response = await fetch("http://localhost:3003/api/auth/total", {
+        const response = await fetch(`${import.meta.env.VITE_BASE_URL}/api/auth/total`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -26,7 +26,6 @@ export default function DashboardSection() {
         }
 
         const result = await response.json();
-        console.log("Total users fetched successfully:", result);
         setTotalUser(result.total);
       } catch (error) {
         console.error("Error fetching total users:", error);
@@ -37,7 +36,7 @@ export default function DashboardSection() {
     const fetchUserBlock = async () => {
       const token = localStorage.getItem("token");
       try {
-        const response = await fetch("http://localhost:3003/api/users/blocks/total", {
+        const response = await fetch(`${import.meta.env.VITE_BASE_URL}/api/users/blocks/total`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -50,7 +49,6 @@ export default function DashboardSection() {
         }
 
         const result = await response.json();
-        console.log("User block fetched successfully:", result);
         setUserBlock(result.total);
       } catch (error) {
         console.error("Error fetching total block:", error);
@@ -61,7 +59,7 @@ export default function DashboardSection() {
     const fetchUser = async () => {
       const token = localStorage.getItem("token");
       try {
-        const response = await fetch("http://localhost:3003/api/auth", {
+        const response = await fetch(`${import.meta.env.VITE_BASE_URL}/api/auth`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -74,7 +72,6 @@ export default function DashboardSection() {
         }
 
         const data = await response.json();
-        console.log("User fetched successfully:", data);
         setUsers(data.users);
       } catch (error) {
         console.error("Error fetching user:", error);
