@@ -22,20 +22,17 @@ const ChatHistory = () => {
       setIsInitialLoading(true);
       try {
         const token = localStorage.getItem("token");
-        const response = await fetch(
-          `http://localhost:3003/api/users/chats/${id}`,
-          {
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+        const response = await fetch(`http://localhost:3003/api/users/chats/${id}`, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        });
 
         if (!response.ok) throw new Error("Failed to fetch chat");
 
         const data = await response.json();
-
+        
         const chat = data.chat || {};
         const history = chat.history;
         let formattedMessages = [];
@@ -52,32 +49,20 @@ const ChatHistory = () => {
               };
             })
             .filter(Boolean);
-        } else if (
-          Array.isArray(chat.user_message) &&
-          Array.isArray(chat.ai_response)
-        ) {
+        } else if (Array.isArray(chat.user_message) && Array.isArray(chat.ai_response)) {
           const userMessages = chat.user_message;
           const aiMessages = chat.ai_response;
 
           const minLength = Math.min(userMessages.length, aiMessages.length);
           for (let i = 0; i < minLength; i++) {
             if (userMessages[i]) {
-              formattedMessages.push({
-                role: "user",
-                content: String(userMessages[i]),
-              });
+              formattedMessages.push({ role: "user", content: String(userMessages[i]) });
             }
             if (aiMessages[i]) {
-              formattedMessages.push({
-                role: "assistant",
-                content: String(aiMessages[i]),
-              });
+              formattedMessages.push({ role: "assistant", content: String(aiMessages[i]) });
             }
           }
         }
-
-        // Debug log all loaded messages
-        console.log("Loaded messages:", formattedMessages);
 
         setMessages(formattedMessages);
       } catch (error) {
@@ -91,7 +76,7 @@ const ChatHistory = () => {
     if (id) fetchChat();
   }, [id]);
 
-  // Handle message send and AI response
+  // Handle message send and streaming AI response
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!input.trim()) return;
@@ -103,45 +88,52 @@ const ChatHistory = () => {
 
     try {
       const token = localStorage.getItem("token");
-      const response = await fetch(
-        `http://localhost:3003/api/users/chats/${id}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify({
-            user_message: input,
-            isStream: false,
-          }),
+
+      const response = await fetch(`http://localhost:3003/api/users/chats/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          user_message: input,
+          isStream: true,
+        }),
+      });
+
+      if (!response.body) throw new Error("ReadableStream not supported or missing response body");
+
+      const reader = response.body.getReader();
+      const decoder = new TextDecoder();
+      let done = false;
+      let aiContent = "";
+      let isFirstChunk = true;
+
+      while (!done) {
+        const { value, done: doneReading } = await reader.read();
+        done = doneReading;
+
+        if (value) {
+          const chunk = decoder.decode(value, { stream: true });
+          aiContent += chunk;
+
+          if (isFirstChunk) {
+            setMessages((prev) => [...prev, { role: "assistant", content: aiContent }]);
+            isFirstChunk = false;
+          } else {
+            setMessages((prev) => {
+              const newMessages = [...prev];
+              newMessages[newMessages.length - 1] = { role: "assistant", content: aiContent };
+              return newMessages;
+            });
+          }
         }
-      );
-
-      if (!response.ok) throw new Error("Failed to send message");
-
-      const data = await response.json();
-
-      if (data.new_ai_response) {
-        const aiMessage = {
-          role: "assistant",
-          content: Array.isArray(data.new_ai_response)
-            ? data.new_ai_response.join("\n")
-            : String(data.new_ai_response),
-        };
-
-        setMessages((prev) => [...prev, aiMessage]);
-      } else {
-        throw new Error("No AI response found");
       }
     } catch (error) {
       console.error("Message error:", error);
       setMessages((prev) => [
         ...prev,
-        {
-          role: "assistant",
-          content: "⚠️ Sorry, I encountered an error.",
-        },
+        { role: "assistant", content: "⚠️ Sorry, I encountered an error." },
       ]);
     } finally {
       setIsLoading(false);
@@ -162,9 +154,7 @@ const ChatHistory = () => {
               <p>No messages yet. Start the conversation!</p>
             </div>
           ) : (
-            messages.map((msg, index) => (
-              <ChatMessage key={index} message={msg} />
-            ))
+            messages.map((msg, idx) => <ChatMessage key={idx} message={msg} />)
           )}
           <div ref={messagesEndRef} />
         </main>

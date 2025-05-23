@@ -51,8 +51,9 @@ function Sidebar() {
         });
 
         const data = await response.json();
-        if (response.ok && data.chat) {
-          setHistory(data.chat);
+
+        if (response.ok && data.data) {
+          setHistory(data.data);
         } else {
           console.error("Failed to load history:", data.message || data);
         }
@@ -95,23 +96,25 @@ function Sidebar() {
     setIsOpen(false);
   };
 
-  // Group chat history
+  // Group chat history and sort by created_at descending inside groups
   const groupedHistory = {
     today: [],
     yesterday: [],
     thisWeek: [],
   };
 
-  history.forEach((chat) => {
-    const chatDate = new Date(chat.created_at);
-    if (isToday(chatDate)) {
-      groupedHistory.today.push(chat);
-    } else if (isYesterday(chatDate)) {
-      groupedHistory.yesterday.push(chat);
-    } else if (isThisWeek(chatDate)) {
-      groupedHistory.thisWeek.push(chat);
-    }
-  });
+  [...history]
+    .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
+    .forEach((chat) => {
+      const chatDate = new Date(chat.created_at);
+      if (isToday(chatDate)) {
+        groupedHistory.today.push(chat);
+      } else if (isYesterday(chatDate)) {
+        groupedHistory.yesterday.push(chat);
+      } else if (isThisWeek(chatDate)) {
+        groupedHistory.thisWeek.push(chat);
+      }
+    });
 
   const renderChatItems = (chats) =>
     chats.map((chat, index) => {
