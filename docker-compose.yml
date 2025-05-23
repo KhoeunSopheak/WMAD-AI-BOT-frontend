@@ -1,0 +1,9 @@
+version: '3.8'
+
+services:
+  frontend:
+    image: gpt-frontend
+    container_name: wmad-frontend
+    ports:
+      - "3002:80"
+    restart: always
