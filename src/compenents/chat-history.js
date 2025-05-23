@@ -22,7 +22,7 @@ const ChatHistory = () => {
       setIsInitialLoading(true);
       try {
         const token = localStorage.getItem("token");
-        const response = await fetch(`http://localhost:3003/api/users/chats/${id}`, {
+        const response = await fetch(`${import.meta.env.VITE_BASE_URL}/api/users/chats/${id}`, {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
@@ -89,7 +89,7 @@ const ChatHistory = () => {
     try {
       const token = localStorage.getItem("token");
 
-      const response = await fetch(`http://localhost:3003/api/users/chats/${id}`, {
+      const response = await fetch(`${import.meta.env.VITE_BASE_URL}/api/users/chats/${id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

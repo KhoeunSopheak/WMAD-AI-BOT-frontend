@@ -11,7 +11,7 @@ export default function UserLock() {
 
         const fetchUserLock = async () => {
             try {
-                const response = await fetch("http://localhost:3003/api/users/blocks", {
+                const response = await fetch(`${import.meta.env.VITE_BASE_URL}/api/users/blocks`, {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json",
@@ -24,7 +24,6 @@ export default function UserLock() {
                 }
 
                 const data = await response.json();
-                console.log("User lock fetched successfully:", data);
                 setUsers(data.blocks);
             } catch (error) {
                 console.error("Error fetching user lock:", error);
@@ -42,7 +41,7 @@ export default function UserLock() {
     const handleDisableUser = async (id) => {
         const token = localStorage.getItem("token");
         try {
-            const response = await fetch(`http://localhost:3003/api/users/blocks/remove/${id}`, {
+            const response = await fetch(`${import.meta.env.VITE_BASE_URL}/api/users/blocks/remove/${id}`, {
                 method: "DELETE",
                 headers: {
                     "Content-Type": "application/json",

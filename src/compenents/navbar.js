@@ -11,7 +11,7 @@ function Navbar() {
     const fetchUser = async () => {
       const token = localStorage.getItem("token");
       try {
-        const response = await fetch(`http://localhost:3003/api/auth/${id}`, {
+        const response = await fetch(`${import.meta.env.VITE_BASE_URL}/api/auth/${id}`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -24,7 +24,6 @@ function Navbar() {
         }
 
         const data = await response.json();
-        console.log("User fetched successfully:", data.full_name);
         setUser(data || null);
       } catch (error) {
         console.error("Error fetching user:", error);

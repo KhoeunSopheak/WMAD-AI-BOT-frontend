@@ -37,7 +37,7 @@ const ChatPage = () => {
 
     try {
       const token = localStorage.getItem("token");
-      const response = await fetch("http://localhost:3003/api/users/chats/generate/ai", {
+      const response = await fetch(`${import.meta.env.VITE_BASE_URL}/api/users/chats/generate/ai`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -76,9 +76,6 @@ const ChatPage = () => {
 
       // After stream ends, get chat ID from headers
       const chatIdFromHeader = response.headers.get("X-Chat-Id");
-      console.log("++++++++++++++++++++++++++++++++++",chatIdFromHeader);
-      console.log("=================================",  response.headers.get("x-chat-id"));
-      
       
       if (chatIdFromHeader) {
         setChatId(chatIdFromHeader);

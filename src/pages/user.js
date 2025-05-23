@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { FaUser, FaUserSlash } from 'react-icons/fa';
 import { LoaderPinwheel } from "lucide-react";
 
 export default function User() {
@@ -9,11 +8,9 @@ export default function User() {
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-    console.log("======>", token);
-
     const fetchUser = async () => {
       try {
-        const response = await fetch("http://localhost:3003/api/auth", {
+        const response = await fetch(`${import.meta.env.VITE_BASE_URL}/api/auth`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -24,9 +21,7 @@ export default function User() {
         if (!response.ok) {
           throw new Error("Failed to fetch user");
         }
-
         const data = await response.json();
-        console.log("User fetched successfully:", data);
         setUsers(data.users);
       } catch (error) {
         console.error("Error fetching user:", error);

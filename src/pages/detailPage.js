@@ -18,7 +18,7 @@ const DetailPage = () => {
 
       try {
         // Fetch the roadmap data using the roadmapId and token
-        const response = await fetch(`http://localhost:3003/api/users/roadmaps/${roadmapId}`, {
+        const response = await fetch(`${import.meta.env.VITE_BASE_URL}/api/users/roadmaps/${roadmapId}`, {
           headers: {
             Authorization: `Bearer ${token}`, // Use the token in the Authorization header
           },
