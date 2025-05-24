@@ -11,7 +11,7 @@ export default function UserLock() {
 
         const fetchUserLock = async () => {
             try {
-                const response = await fetch(`${import.meta.env.VITE_BASE_URL}/api/users/blocks`, {
+                const response = await fetch("http://localhost:3003/api/users/blocks", {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json",

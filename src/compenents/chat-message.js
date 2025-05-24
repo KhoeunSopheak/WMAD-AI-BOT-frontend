@@ -33,8 +33,8 @@ const ChatMessage = ({ message }) => {
         <div
           className={`p-3 rounded-lg whitespace-pre-wrap break-words ${
             isUser
-              ? "bg-blue-600 text-white rounded-tr-none"
-              : "bg-gray-100 text-gray-800 rounded-tl-none"
+              ? " text-white rounded-tr-none"
+              : " text-gray-800 rounded-tl-none"
           }`}
         >
           <MessageBox message={{ role: message.role, content: normalizedContent }} />

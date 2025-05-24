@@ -11,7 +11,7 @@ function Navbar() {
     const fetchUser = async () => {
       const token = localStorage.getItem("token");
       try {
-        const response = await fetch(`${import.meta.env.VITE_BASE_URL}/api/auth/${id}`, {
+        const response = await fetch(`http://localhost:3003/api/auth/${id}`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -71,19 +71,21 @@ function Navbar() {
 
   return (
     <header className="flex items-center justify-between px-6 py-4 bg-white shadow">
-      <div className="text-[#184f71] font-bold text-xl">WMAD GPT</div>
-      <div className="flex items-center gap-4">
+      <div className="hidden sm:block text-[#184f71] font-bold text-xl">
+        WMAD GPT
+      </div>
+      <div className="flex items-center justify-end gap-4 w-full sm:w-auto">
         {user && (
-          <div className="flex items-center gap-4 ">
+          <div className="flex items-center gap-3 sm:gap-4">
             {user.avatar && user.avatar !== "/placeholder.svg" ? (
               <img
                 src={user.avatar}
                 alt={user.full_name || "Unknown"}
-                className="w-10 h-10 rounded-full object-cover"
+                className="w-8 h-8 sm:w-10 sm:h-10 rounded-full object-cover"
               />
             ) : (
               <div
-                className="w-8 h-8 rounded-full flex items-center justify-center text-black font-bold"
+                className="w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center text-white font-bold"
                 style={{
                   backgroundColor: getColorByFirstLetter(user.full_name?.[0]),
                 }}
@@ -91,7 +93,7 @@ function Navbar() {
                 {user.full_name?.[0]?.toUpperCase() || "U"}
               </div>
             )}
-            <span className="text-sm font-medium text-[#184f71]">
+            <span className="hidden sm:inline text-sm font-medium text-black whitespace-nowrap truncate max-w-[120px] sm:max-w-none">
               {user.full_name || "Unknown User"}
             </span>
           </div>

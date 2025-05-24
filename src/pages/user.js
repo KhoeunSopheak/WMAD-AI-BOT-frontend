@@ -10,7 +10,7 @@ export default function User() {
     const token = localStorage.getItem("token");
     const fetchUser = async () => {
       try {
-        const response = await fetch(`${import.meta.env.VITE_BASE_URL}/api/auth`, {
+        const response = await fetch("http://localhost:3003/api/auth", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
