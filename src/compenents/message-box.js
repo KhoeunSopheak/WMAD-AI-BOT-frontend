@@ -14,96 +14,88 @@ const MessageBox = ({ message }) => {
       ? message.content
       : "[No content]";
 
-  return (
-    <div className={`text-sm ${isUser ? "text-white" : "text-gray-800"}`}>
-      <ReactMarkdown
-        components={{
-          // Paragraph
-          p: ({ node, ...props }) => <p className="mb-4 last:mb-0" {...props} />,
-
-          // Headers
-          h1: ({ node, ...props }) => (
-            <h1 className="text-2xl font-bold mb-3 mt-4" {...props} />
-          ),
-          h2: ({ node, ...props }) => (
-            <h2 className="text-xl font-bold mb-3 mt-4" {...props} />
-          ),
-          h3: ({ node, ...props }) => (
-            <h3 className="text-lg font-bold mb-2 mt-3" {...props} />
-          ),
-
-          // Lists
-          ul: ({ node, ...props }) => (
-            <ul className="list-disc pl-5 mb-4" {...props} />
-          ),
-          ol: ({ node, ...props }) => (
-            <ol className="list-decimal pl-5 mb-4" {...props} />
-          ),
-          li: ({ node, ...props }) => <li className="mb-1" {...props} />,
-
-          // Links
-          a: ({ node, ...props }) => (
-            <a
-              className="text-blue-500 hover:underline"
-              target="_blank"
-              rel="noopener noreferrer"
-              {...props}
-            />
-          ),
-
-          // Code blocks and inline code
-          code({ inline, className, children, ...props }) {
-            const match = /language-(\w+)/.exec(className || "");
-            const codeContent = String(children).replace(/\n$/, "");
-
-            if (!inline && match) {
-              return (
-                <div className="my-2 rounded-md overflow-hidden">
-                  <SyntaxHighlighter
-                    style={dracula}
-                    language={match[1]}
-                    PreTag="div"
-                    showLineNumbers={true}
-                    wrapLines={true}
-                    customStyle={{
-                      margin: 0,
-                      padding: "1rem",
-                      backgroundColor: "#282A36",
-                      fontSize: "0.85rem",
-                    }}
-                    {...props}
-                  >
-                    {codeContent}
-                  </SyntaxHighlighter>
-                </div>
-              );
-            }
-
-            return (
-              <code
-                className={`font-mono text-xs px-1.5 py-0.5 rounded ${
-                  isUser ? "bg-blue-700/30 text-blue-100" : "bg-gray-300 text-gray-800"
-                }`}
-                {...props}
-              >
-                {codeContent}
-              </code>
-            );
-          },
-
-          // Blockquotes
-          blockquote: ({ node, ...props }) => (
-            <blockquote
-              className={`border-l-4 pl-4 italic my-3 ${
-                isUser ? "border-blue-400 bg-blue-900/20" : "border-gray-400 bg-yellow-100"
-              }`}
-              {...props}
-            />
-          ),
-        }}
+  // Custom markdown components
+  const components = {
+    p: ({ node, ...props }) => (
+      <p className="mb-1 text-sm sm:text-base leading-relaxed text-gray-800 dark:text-gray-200">
+        {props.children}
+      </p>
+    ),
+    h1: ({ node, ...props }) => (
+      <h1 className="text-2xl font-bold mb-3 mt-6 text-gray-900 dark:text-white">
+        🧠 {props.children}
+      </h1>
+    ),
+    h2: ({ node, ...props }) => (
+      <h2 className="text-xl font-semibold mb-3 mt-5 text-gray-800 dark:text-white">
+        📌 {props.children}
+      </h2>
+    ),
+    h3: ({ node, ...props }) => (
+      <h3 className="text-lg font-semibold mb-2 mt-4 text-gray-700 dark:text-white">
+        💡 {props.children}
+      </h3>
+    ),
+    ul: ({ node, ...props }) => (
+      <ul className="list-disc pl-5 mb-4 text-sm text-gray-700 dark:text-gray-200">
+        {props.children}
+      </ul>
+    ),
+    ol: ({ node, ...props }) => (
+      <ol className="list-decimal pl-5 mb-4 text-sm text-gray-700 dark:text-gray-200">
+        {props.children}
+      </ol>
+    ),
+    li: ({ node, ...props }) => <li className="mb-1">✅ {props.children}</li>,
+    code: ({ node, inline, className, children, ...props }) => {
+      const codeContent = String(children).trim();
+      return inline ? (
+        <code
+          className="bg-gray-100 dark:bg-gray-800 text-[13px] px-1.5 py-0.5 rounded font-mono text-pink-600"
+          {...props}
+        >
+          {codeContent}
+        </code>
+      ) : (
+        <SyntaxHighlighter
+          language="javascript"
+          style={dracula}
+          PreTag="div"
+          className="rounded-md text-sm overflow-x-auto"
+        >
+          {codeContent}
+        </SyntaxHighlighter>
+      );
+    },
+    a: ({ node, ...props }) => (
+      <a
+        className="text-blue-500 hover:underline hover:text-blue-600 transition-all"
+        target="_blank"
+        rel="noopener noreferrer"
+        {...props}
       >
-        {contentToRender}
-      </ReactMarkdown>
+        🔗 {props.children}
+      </a>
+    ),
+    blockquote: ({ node, ...props }) => (
+      <blockquote className="border-l-4 border-blue-400 pl-4 italic text-gray-600 dark:text-gray-300 bg-blue-50 dark:bg-gray-800 py-2 px-3 rounded-md my-3">
+        💬 {props.children}
+      </blockquote>
+    ),
+    strong: ({ node, ...props }) => (
+      <strong className="font-semibold text-black dark:text-white">{props.children}</strong>
+    ),
+  };
+
+  return (
+    <div
+      className={`max-w-3xl px-4 py-3 rounded-lg shadow-md mb-4 transition-all ${
+        isUser
+          ? "bg-gray-100"
+          : "bg-gray-100 dark:bg-[#1e1e1e] text-gray-800 dark:text-gray-200"
+      }`}
+    >
+      <ReactMarkdown components={components}>{contentToRender}</ReactMarkdown>
     </div>
   );
 };

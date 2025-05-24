@@ -43,7 +43,7 @@ export default function Signin() {
     setLoading(true)
 
     try {
-      const res = await fetch(`${import.meta.env.VITE_BASE_URL}/api/auth/login`, {
+      const res = await fetch("http://localhost:3003/api/auth/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -118,10 +118,10 @@ export default function Signin() {
             {loading ? "Loging in..." : "Login"}
           </button>
         </form>
-        <div className="p-2 flex justify-center mt-10 text-white">
+        <div className="p-2 flex justify-center mt-10 text-black">
           <h5>Don't have an account? {""}
             <Link to="/signup">
-              <span className="text-white font-semibold hover:underline">Sign up</span>
+              <span className="text-blue-500 font-semibold hover:underline">Sign up</span>
             </Link>
           </h5>
         </div>

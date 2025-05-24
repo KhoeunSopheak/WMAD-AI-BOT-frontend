@@ -13,7 +13,7 @@ export default function DashboardSection() {
     const token = localStorage.getItem("token");
     const fetchTotalUser = async () => {
       try {
-        const response = await fetch(`${import.meta.env.VITE_BASE_URL}/api/auth/total`, {
+        const response = await fetch("http://localhost:3003/api/auth/total", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -36,7 +36,7 @@ export default function DashboardSection() {
     const fetchUserBlock = async () => {
       const token = localStorage.getItem("token");
       try {
-        const response = await fetch(`${import.meta.env.VITE_BASE_URL}/api/users/blocks/total`, {
+        const response = await fetch("http://localhost:3003/api/users/blocks/total", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -59,7 +59,7 @@ export default function DashboardSection() {
     const fetchUser = async () => {
       const token = localStorage.getItem("token");
       try {
-        const response = await fetch(`${import.meta.env.VITE_BASE_URL}/api/auth`, {
+        const response = await fetch("http://localhost:3003/api/auth", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
