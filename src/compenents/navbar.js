@@ -93,9 +93,12 @@ function Navbar() {
                 {user.full_name?.[0]?.toUpperCase() || "U"}
               </div>
             )}
-            <span className="hidden sm:inline text-sm font-medium text-black whitespace-nowrap truncate max-w-[120px] sm:max-w-none">
+            <div className="flex flex-col">
+            <span className="hidden sm:inline text-lg font-medium text-black whitespace-nowrap truncate max-w-[120px] sm:max-w-none">
               {user.full_name || "Unknown User"}
             </span>
+            <span className="text-sm">{user.email}</span>
+            </div>
           </div>
         )}
         <Link to="/">

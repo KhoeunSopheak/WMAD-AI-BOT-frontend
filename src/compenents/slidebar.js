@@ -168,7 +168,7 @@ function Sidebar() {
         ${isOpen ? "translate-x-0" : "-translate-x-full"} md:translate-x-0 md:static md:block`}
       >
         <div className="p-3">
-          <div className="flex items-center justify-center w-40 h-10 rounded">
+          <div className="flex items-center justify-center w-40 h-12 rounded">
             <img src={logo} alt="Logo" />
           </div>
         </div>
