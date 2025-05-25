@@ -89,11 +89,10 @@ export default function User() {
 
   return (
     <div className="space-y-2 p-6 h-full">
-      <div className="bg-white shadow rounded-md overflow-auto h-screen">
+      <div className="bg-white shadow rounded-xl overflow-auto h-screen">
         <table className="min-w-full">
           <thead className="bg-gray-100 sticky top-0">
             <tr>
-              <th className="py-3 px-6 text-left">No</th>
               <th className="py-3 px-6 text-left">Full Name</th>
               <th className="py-3 px-6 text-left">Email</th>
               <th className="py-3 px-6 text-left">Created At</th>
@@ -102,10 +101,9 @@ export default function User() {
             </tr>
           </thead>
           <tbody>
-            {users.map((user, index) => (
-              <tr key={user.id} className="border-b">
-                <td className="py-4 px-6">{index + 1}</td>
-                <td className="py-4 px-6 text-[#184f71] font-medium">
+            {users.map((user) => (
+              <tr key={user.id} className="border-b hover:bg-blue-100 hover:shadow-lg">
+                <td className="py-4 px-6 font-medium">
                   <div className="flex items-center gap-2">
                     {user.avatar && user.avatar !== "/placeholder.svg" ? (
                       <img
