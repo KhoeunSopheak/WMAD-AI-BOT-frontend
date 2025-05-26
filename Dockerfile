@@ -1,14 +1,12 @@
-FROM node:20
+# Build stage
+FROM node:18 AS builder
 
-WORKDIR /usr/src/app
-
-
-COPY package*.json ./
-
-RUN npm install -force
-RUN apt-get update && apt-get install -y xdg-utils
-
+WORKDIR /app
 COPY . .
+RUN npm install
+RUN npm run build
 
+# Production stage
+FROM nginx:alpine
+COPY --from=builder /app/build /usr/share/nginx/html
 
-CMD [ "npm", "run", "start" ]

@@ -90,7 +90,7 @@ const GenerateQuiz = () => {
       <h2 className="text-2xl font-bold mb-6 text-center">AI Quiz Generator</h2>
 
       {/* Input */}
-      <div className="flex gap-4 mb-6 sticky top-0 z-30 p-4 shadow-sm">
+      <div className="flex gap-4 mb-6 sticky top-0 z-30 p-4">
         <input
           type="text"
           className="border p-2 w-full rounded-md h-14"

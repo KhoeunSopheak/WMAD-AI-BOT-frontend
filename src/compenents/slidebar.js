@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import {
   LayoutDashboard,
-  MessageCircle,
+  MessageCirclePlus,
   Folder,
   FileQuestion,
   BookOpen,
@@ -74,11 +74,11 @@ function Sidebar() {
         ...(userRole === "admin"
           ? [
               { id: 1, label: "Dashboard", path: "/dashboard", icon: <LayoutDashboard size={20} /> },
-              { id: 2, label: "User", path: "/users", icon: <Users size={20} /> },
+              { id: 2, label: "Users", path: "/users", icon: <Users size={20} /> },
               { id: 3, label: "Disable user", path: "/userlock", icon: <UserLock size={20} /> },
             ]
           : []),
-        { id: 4, label: "ChatWMAD GPT", path: "/newchat", icon: <MessageCircle size={20} /> },
+        { id: 4, label: "ChatWMAD GPT", path: "/newchat", icon: <MessageCirclePlus size={20} /> },
       ],
     },
     {

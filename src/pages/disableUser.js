@@ -98,7 +98,7 @@ export default function UserLock() {
                             <p className="text-lg font-semibold">There are no user block.</p>
                           </div>
                         ) : (users.map((user, index) => (
-                            <tr key={user.id} className="border-b">
+                            <tr key={user.id} className="border-b hover:bg-blue-100 hover:shadow-lg">
                                 <td className="py-4 px-6">{index + 1}</td>
                                 <td className="py-4 px-6 text-[#184f71] font-medium">
                                     <div className="flex items-center gap-2">
