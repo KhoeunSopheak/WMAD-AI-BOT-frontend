@@ -2,8 +2,10 @@ version: '3.8'
 
 services:
   frontend:
-    image: gpt-frontend
+    build:
+      context: .
+      dockerfile: Dockerfile
     container_name: wmad-frontend
     ports:
-      - "3002:80"
+      - "127.0.0.1:3301:80"
     restart: always

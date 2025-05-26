@@ -112,18 +112,26 @@ const ChatHistory = () => {
       while (!done) {
         const { value, done: doneReading } = await reader.read();
         done = doneReading;
-
+      
         if (value) {
           const chunk = decoder.decode(value, { stream: true });
           aiContent += chunk;
-
+      
+          const currentContent = aiContent; // capture stable value to use in setMessages
+      
           if (isFirstChunk) {
-            setMessages((prev) => [...prev, { role: "assistant", content: aiContent }]);
+            setMessages((prev) => [
+              ...prev,
+              { role: "assistant", content: currentContent },
+            ]);
             isFirstChunk = false;
           } else {
             setMessages((prev) => {
               const newMessages = [...prev];
-              newMessages[newMessages.length - 1] = { role: "assistant", content: aiContent };
+              newMessages[newMessages.length - 1] = {
+                role: "assistant",
+                content: currentContent,
+              };
               return newMessages;
             });
           }

@@ -51,7 +51,7 @@ const MessageBox = ({ message }) => {
       const codeContent = String(children).trim();
       return inline ? (
         <code
-          className="bg-gray-100 dark:bg-gray-800 text-[13px] px-1.5 py-0.5 rounded font-mono text-pink-600"
+          className="bg-gray-100 dark:bg-gray-800 text-[13px] px-1.5 py-0.5 rounded font-mono text-[#FF851B]"
           {...props}
         >
           {codeContent}
