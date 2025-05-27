@@ -4,6 +4,8 @@ import { Mail, Lock } from "lucide-react";
 import logo from "../assets/wmadlogo.png";
 import { useNavigate, Link } from "react-router-dom";
 
+
+const baseUrl = process.env.REACT_APP_BASE_URL;
 export default function Signin() {
   const [formData, setFormData] = useState({
     email: "",
@@ -43,7 +45,7 @@ export default function Signin() {
     setLoading(true)
 
     try {
-      const res = await fetch("http://localhost:3003/api/auth/login", {
+      const res = await fetch(`${baseUrl}/api/auth/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

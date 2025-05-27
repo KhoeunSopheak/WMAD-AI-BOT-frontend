@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Navigation2, LoaderPinwheel } from "lucide-react";
 
+const baseUrl = process.env.REACT_APP_BASE_URL;
 const GenerateQuiz = () => {
   const [topic, setTopic] = useState("");
   const [quizzes, setQuizzes] = useState([]);
@@ -16,7 +17,7 @@ const GenerateQuiz = () => {
     const fetchAllQuizzes = async () => {
       if (!token || !user_id) return;
       try {
-        const res = await fetch(`http://localhost:3003/api/users/quizzes/generate/${user_id}`, {
+        const res = await fetch(`${baseUrl}/api/users/quizzes/generate/${user_id}`, {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
@@ -42,7 +43,7 @@ const GenerateQuiz = () => {
     setError(null);
 
     try {
-      const response = await fetch("http://localhost:3003/api/users/quizzes/generate-quiz", {
+      const response = await fetch(`${baseUrl}/api/users/quizzes/generate-quiz`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

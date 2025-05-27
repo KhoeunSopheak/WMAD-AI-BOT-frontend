@@ -3,6 +3,7 @@ import { Send, LoaderPinwheel } from "lucide-react";
 import { useParams } from "react-router-dom";
 import ChatMessage from "../compenents/chat-message";
 
+const baseUrl = process.env.REACT_APP_BASE_URL;
 const ChatHistory = () => {
   const { id } = useParams();
   const [messages, setMessages] = useState([]);
@@ -22,7 +23,7 @@ const ChatHistory = () => {
       setIsInitialLoading(true);
       try {
         const token = localStorage.getItem("token");
-        const response = await fetch(`http://localhost:3003/api/users/chats/${id}`, {
+        const response = await fetch(`${baseUrl}/api/users/chats/${id}`, {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
@@ -89,7 +90,7 @@ const ChatHistory = () => {
     try {
       const token = localStorage.getItem("token");
 
-      const response = await fetch(`http://localhost:3003/api/users/chats/${id}`, {
+      const response = await fetch(`${baseUrl}/api/users/chats/${id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

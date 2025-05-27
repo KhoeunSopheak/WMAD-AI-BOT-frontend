@@ -17,6 +17,7 @@ import {
 import { formatDistanceToNow, isToday, isYesterday, isThisWeek } from "date-fns";
 import logo from "../assets/wmadlogo.png";
 
+const baseUrl = process.env.REACT_APP_BASE_URL;
 function Sidebar() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -43,7 +44,7 @@ function Sidebar() {
       }
 
       try {
-        const response = await fetch(`http://localhost:3003/api/users/chats/history/${user_id}`, {
+        const response = await fetch(`${baseUrl}/api/users/chats/history/${user_id}`, {
           headers: {
             Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",

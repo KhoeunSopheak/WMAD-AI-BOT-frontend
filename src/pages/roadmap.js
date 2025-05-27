@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Navigation2, LoaderPinwheel } from "lucide-react";
 
+const baseUrl = process.env.REACT_APP_BASE_URL;
 const RoadMap = () => {
   const [topic, setTopic] = useState("");
   const [loading, setLoading] = useState(false);
@@ -30,7 +31,7 @@ const RoadMap = () => {
 
     try {
       const response = await fetch(
-        "http://localhost:3003/api/users/roadmaps/generate-roadmap",
+        `${baseUrl}/api/users/roadmaps/generate-roadmap`,
         {
           method: "POST",
           headers: {
@@ -72,7 +73,7 @@ const RoadMap = () => {
     const fetchAllRoadmaps = async () => {
       try {
         const response = await fetch(
-          `http://localhost:3003/api/users/roadmaps/generate/${user_id}`,
+          `${baseUrl}/api/users/roadmaps/generate/${user_id}`,
           {
             method: "GET",
             headers: {
@@ -114,7 +115,7 @@ const RoadMap = () => {
     setLoading(true);
   
     try {
-      const res = await fetch(`http://localhost:3003/api/users/roadmaps/${id}`, {
+      const res = await fetch(`${baseUrl}/api/users/roadmaps/${id}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",

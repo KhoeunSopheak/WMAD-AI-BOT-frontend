@@ -1,17 +1,14 @@
 import React, { useState, useEffect, useCallback } from "react";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
-import {
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  Tooltip,
-  Legend,
-  CartesianGrid,
-  ResponsiveContainer,
-} from "recharts";
+import { Bar } from "react-chartjs-2";
+import { Chart as ChartJS, BarElement, CategoryScale, LinearScale, Tooltip, Legend } from "chart.js";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import TextField from "@mui/material/TextField";
 import { ChartNoAxesCombined, Users, UserLock } from 'lucide-react';
+
+const baseUrl = process.env.REACT_APP_BASE_URL;
+ChartJS.register(CategoryScale, LinearScale, BarElement, Tooltip, Legend);
 
 export default function UserStatsChart() {
   const [startDate, setStartDate] = useState(new Date("2025-05-01"));
@@ -22,7 +19,6 @@ export default function UserStatsChart() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-
   const fetchUserStats = useCallback(async () => {
     try {
       setLoading(true);
@@ -30,7 +26,7 @@ export default function UserStatsChart() {
       const token = localStorage.getItem("token");
 
       const res = await fetch(
-        `http://localhost:3003/api/auth/stats?start=${startDate.toISOString().split("T")[0]}&end=${endDate.toISOString().split("T")[0]}`,
+        `${baseUrl}/api/auth/stats?start=${startDate.toISOString().split("T")[0]}&end=${endDate.toISOString().split("T")[0]}`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -42,8 +38,6 @@ export default function UserStatsChart() {
       if (!res.ok) throw new Error("Failed to fetch user stats");
 
       const data = await res.json();
-      console.log(data)
-
       setChartData(data.data || []);
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -57,7 +51,7 @@ export default function UserStatsChart() {
     const token = localStorage.getItem("token");
     const fetchTotalUser = async () => {
       try {
-        const response = await fetch("http://localhost:3003/api/auth/total", {
+        const response = await fetch(`${baseUrl}/api/auth/total`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -78,9 +72,8 @@ export default function UserStatsChart() {
     };
 
     const fetchUserBlock = async () => {
-      const token = localStorage.getItem("token");
       try {
-        const response = await fetch("http://localhost:3003/api/users/blocks/total", {
+        const response = await fetch(`${baseUrl}/api/users/blocks/total`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -105,6 +98,23 @@ export default function UserStatsChart() {
     fetchUserStats();
   }, [fetchUserStats]);
 
+  // Prepare data for Chart.js
+  const barChartData = {
+    labels: chartData.map((d) => d.date),
+    datasets: [
+      {
+        label: "Total Users",
+        data: chartData.map((d) => d.totalUsers),
+        backgroundColor: "#2b53cc",
+      },
+      {
+        label: "Blocked Users",
+        data: chartData.map((d) => d.blockedUsers),
+        backgroundColor: "#E2424A",
+      },
+    ],
+  };
+
   return (
     <div className="p-6 bg-white rounded-xl shadow-md w-full max-w-8xl mx-auto">
       <h2 className="text-xl font-bold mb-4 text-gray-800">User Chart by Date</h2>
@@ -121,7 +131,7 @@ export default function UserStatsChart() {
 
         <div className="flex w-2/5 justify-center items-center gap-10 p-6 bg-[#E2424A] border rounded-xl mx-4 my-8 shadow-xl">
           <div className="flex items-center justify-center w-12 h-12 rounded-full bg-white/20">
-            <UserLock fontSize={24} className="text-white" /> 
+            <UserLock fontSize={24} className="text-white" />
           </div>
           <div className="flex flex-col">
             <p className="text-white text-sm">Blocked Users</p>
@@ -139,25 +149,22 @@ export default function UserStatsChart() {
           </div>
         </div>
       </div>
-      
-      <div className="flex flex-wrap gap-4 mb-4 items-end">
-        <div>
-          <label className="text-sm font-medium text-gray-600">Start Date</label>
-          <DatePicker
-            selected={startDate}
-            onChange={(date) => setStartDate(date)}
-            className="border p-2 rounded text-sm"
-          />
-        </div>
 
-        <div>
-          <label className="text-sm font-medium text-gray-600">End Date</label>
+      <div className="flex flex-wrap gap-4 mb-4 items-end">
+        <LocalizationProvider dateAdapter={AdapterDateFns}>
           <DatePicker
-            selected={endDate}
-            onChange={(date) => setEndDate(date)}
-            className="border p-2 rounded text-sm"
+            label="Start Date"
+            value={startDate}
+            onChange={(newDate) => setStartDate(newDate)}
+            renderInput={(params) => <TextField {...params} size="small" />}
           />
-        </div>
+          <DatePicker
+            label="End Date"
+            value={endDate}
+            onChange={(newDate) => setEndDate(newDate)}
+            renderInput={(params) => <TextField {...params} size="small" />}
+          />
+        </LocalizationProvider>
 
         <button
           onClick={fetchUserStats}
@@ -173,17 +180,10 @@ export default function UserStatsChart() {
       ) : error ? (
         <p className="text-center text-red-500">{error}</p>
       ) : chartData.length > 0 ? (
-        <ResponsiveContainer width="100%" height={400}>
-          <BarChart data={chartData}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="date" />
-            <YAxis />
-            <Tooltip />
-            <Legend />
-            <Bar dataKey="totalUsers" fill="#2b53cc" name="Total Users" />
-            <Bar dataKey="blockedUsers" fill="#E2424A" name="Blocked Users" />
-          </BarChart>
-        </ResponsiveContainer>
+        <div className="w-full h-[400px] px-3">
+          <Bar data={barChartData} />
+        </div>
+
       ) : (
         <p className="text-center text-gray-400">No data available for selected date range.</p>
       )}
