@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { LoaderPinwheel } from "lucide-react";
 
+const baseUrl = process.env.REACT_APP_BASE_URL;
 export default function User() {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -10,7 +11,7 @@ export default function User() {
     const token = localStorage.getItem("token");
     const fetchUser = async () => {
       try {
-        const response = await fetch("http://localhost:3003/api/auth", {
+        const response = await fetch(`${baseUrl}/api/auth`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -38,7 +39,7 @@ export default function User() {
 
   const handleDisableUser = async (id) => {
     const token = localStorage.getItem("token");
-    await fetch(`http://localhost:3003/api/auth/disable/${id}`, {
+    await fetch(`${baseUrl}/api/auth/disable/${id}`, {
       method: "PATCH",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -54,7 +55,7 @@ export default function User() {
 
   const handleEnableUser = async (id) => {
     const token = localStorage.getItem("token");
-    await fetch(`http://localhost:3003/api/auth/enable/${id}`, {
+    await fetch(`${baseUrl}/api/auth/enable/${id}`, {
       method: "PATCH",
       headers: {
         Authorization: `Bearer ${token}`,

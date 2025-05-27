@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { LogOut } from "lucide-react";
 import { Link } from "react-router-dom";
 
+const baseUrl = process.env.REACT_APP_BASE_URL;
 function Navbar() {
   const [user, setUser] = useState(null);
 
@@ -11,7 +12,7 @@ function Navbar() {
     const fetchUser = async () => {
       const token = localStorage.getItem("token");
       try {
-        const response = await fetch(`http://localhost:3003/api/auth/${id}`, {
+        const response = await fetch(`${baseUrl}/api/auth/${id}`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",

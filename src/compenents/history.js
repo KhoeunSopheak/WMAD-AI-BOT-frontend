@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { MessageSquare } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 
+const baseUrl = process.env.REACT_APP_BASE_URL;
 function History() {
   const [history, setHistory] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -17,7 +18,7 @@ function History() {
       }
 
       try {
-        const response = await fetch("http://localhost:3003/api/users/chats", {
+        const response = await fetch(`${baseUrl}/api/users/chats`, {
           headers: {
             Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",

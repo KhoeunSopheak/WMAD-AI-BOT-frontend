@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { LoaderPinwheel } from "lucide-react";
 
+
+const baseUrl = process.env.REACT_APP_BASE_URL;
 export default function UserLock() {
     const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -11,7 +13,7 @@ export default function UserLock() {
 
         const fetchUserLock = async () => {
             try {
-                const response = await fetch("http://localhost:3003/api/users/blocks", {
+                const response = await fetch(`${baseUrl}/api/users/blocks`, {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json",
@@ -41,7 +43,7 @@ export default function UserLock() {
     const handleDisableUser = async (id) => {
         const token = localStorage.getItem("token");
         try {
-            const response = await fetch(`${import.meta.env.VITE_BASE_URL}/api/users/blocks/remove/${id}`, {
+            const response = await fetch(`${baseUrl}/api/users/blocks/remove/${id}`, {
                 method: "DELETE",
                 headers: {
                     "Content-Type": "application/json",

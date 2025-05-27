@@ -4,6 +4,7 @@ import { Mail, User, Lock } from "lucide-react";
 import logo from "../assets/wmadlogo.png";
 import { useNavigate } from "react-router-dom";
 
+const baseUrl = process.env.REACT_APP_BASE_URL;
 export default function Signup() {
   const [formData, setFormData] = useState({
     full_name: "",
@@ -48,7 +49,7 @@ export default function Signup() {
     setLoading(true);
 
     try {
-      const res = await fetch("http://localhost:3003/api/auth/register", {
+      const res = await fetch(`${baseUrl}/api/auth/register`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

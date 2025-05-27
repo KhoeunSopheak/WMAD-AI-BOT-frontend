@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
+const baseUrl = process.env.REACT_APP_BASE_URL;
 const DetailPage = () => {
   const { roadmapId, childTitle } = useParams(); // Get roadmapId and childTitle from the URL
   const [roadmap, setRoadmap] = useState(null);
@@ -18,7 +19,7 @@ const DetailPage = () => {
 
       try {
         // Fetch the roadmap data using the roadmapId and token
-        const response = await fetch(`http://localhost:3003/api/users/roadmaps/${roadmapId}`, {
+        const response = await fetch(`${baseUrl}/api/users/roadmaps/${roadmapId}`, {
           headers: {
             Authorization: `Bearer ${token}`, // Use the token in the Authorization header
           },

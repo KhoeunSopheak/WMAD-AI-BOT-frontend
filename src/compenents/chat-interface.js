@@ -3,6 +3,7 @@ import { Send, LoaderPinwheel } from "lucide-react";
 import ChatMessage from "./chat-message";
 import { useParams } from "react-router-dom";
 
+const baseUrl = process.env.REACT_APP_BASE_URL;
 const ChatPage = () => {
   const { categoryTitle } = useParams();
   const [selectedCategory, setSelectedCategory] = useState("");
@@ -37,7 +38,7 @@ const ChatPage = () => {
 
     try {
       const token = localStorage.getItem("token");
-      const response = await fetch("http://localhost:3003/api/users/chats/generate/ai", {
+      const response = await fetch(`${baseUrl}/api/users/chats/generate/ai`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
